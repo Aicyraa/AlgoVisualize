@@ -15,6 +15,7 @@
 
          html,
          body {
+            background: var(--muted-light);
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -25,32 +26,27 @@
       </style>
    </head>
    <body>
-      <div class="header">
-         <img src="" alt="">
-         <div class="header-text">
-            <img src="" alt="">
-            <h2> Algo - Visual</h2>
-         </div>
-      </div>
       <div class="container">
-         <div class="container-selection">
-            <span id="bubble">Bubble </span>
-            <span id="selection">Selection </span>
-            <span id="insert">Insert </span>
-            <span id="merge">Merge </span>
-            <span id="quick">Quick </span>
-            <span id="linear">Linear </span>
-            <span id="binary">Binary </span>
+         <div class="container-dropdown">
+            <img src="arrow.svg" class="dropdown-btn" />
+            <div class="container-selection">
+               <span class="types" data-type="bubble">Bubble </span>
+               <span class="types" data-type="selection">Selection </span>
+               <span class="types" data-type="insert">Insert </span>
+               <span class="types" data-type="merge">Merge </span>
+               <span class="types" data-type="quick">Quick </span>
+               <span class="types" data-type="linear">Linear </span>
+               <span class="types" data-type="binary">Binary </span>
+            </div>
          </div>
          <div class="container-graph">
-            <svg></svg>
+            <div class="graph"></div>
             <div class="graph-input">
                <input
                   type="text"
                   id="input"
                   placeholder="Enter range of numbers with comma seperated"
                />
-               <input type="text" id="output" placeholder="Output: " disabled />
                <button type="button">Enter</button>
             </div>
          </div>
