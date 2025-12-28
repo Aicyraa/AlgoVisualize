@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>AlgoVisual</title>
+      <script src="script.js" type="module" defer></script>
+      <style>
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+         }
+
+         html,
+         body {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <div class="container-selection">
+            <span id="bubble">Bubble Sorting</span>
+            <span id="selection">Selection Sorting</span>
+            <span id="insert">Insert Sorting</span>
+            <span id="merge">Merge Sorting</span>
+            <span id="quick">Quick Sort</span>
+            <span id="linear">Linear Searchin</span>
+            <span id="binary">Binary Search</span>
+         </div>
+         <div class="container-graph">
+            <svg></svg>
+            <div class="graph-input">
+               <input type="text" id="input" placeholder="Enter range of numbers with comma seperated"/>
+               <input type="text" id="output" placeholder="Output: " disabled />
+               <button type="button"> Enter</button>
+            </div>
+         </div>
+         <div class="container-details">
+            <h1></h1>
+            <p></p>
+         </div>
+      </div>
+   </body>
+</html>
