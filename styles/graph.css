@@ -1,0 +1,36 @@
+.graph {
+   flex-grow: 1;
+   display: flex;
+   gap: 8px;
+   width: 100%;
+   height: 100%;
+   overflow-x: scroll;
+   padding: 4px;
+}
+
+.graph::-webkit-scrollbar {
+   display: none;
+}
+
+/* Points */
+
+.points {
+   display: flex;
+   flex-direction: column-reverse;
+   gap: 8px;
+   width: 40px;
+   text-align: center;
+}
+
+#bar {
+   background-color: var(--accent);
+   border-radius: 4px;
+   width: 100%;
+   height: 50px;
+}
+
+#text {
+   color: var(--muted-text);
+   font-size: 1.1rem;
+   font-weight: bolder;
+}
