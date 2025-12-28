@@ -4,6 +4,7 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>AlgoVisual</title>
+      <link rel="stylesheet" href="style.css" />
       <script src="script.js" type="module" defer></script>
       <style>
          * {
@@ -16,33 +17,51 @@
          body {
             height: 100%;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            gap: 1rem;
          }
       </style>
    </head>
    <body>
+      <div class="header">
+         <img src="" alt="">
+         <div class="header-text">
+            <img src="" alt="">
+            <h2> Algo - Visual</h2>
+         </div>
+      </div>
       <div class="container">
          <div class="container-selection">
-            <span id="bubble">Bubble Sorting</span>
-            <span id="selection">Selection Sorting</span>
-            <span id="insert">Insert Sorting</span>
-            <span id="merge">Merge Sorting</span>
-            <span id="quick">Quick Sort</span>
-            <span id="linear">Linear Searchin</span>
-            <span id="binary">Binary Search</span>
+            <span id="bubble">Bubble </span>
+            <span id="selection">Selection </span>
+            <span id="insert">Insert </span>
+            <span id="merge">Merge </span>
+            <span id="quick">Quick </span>
+            <span id="linear">Linear </span>
+            <span id="binary">Binary </span>
          </div>
          <div class="container-graph">
             <svg></svg>
             <div class="graph-input">
-               <input type="text" id="input" placeholder="Enter range of numbers with comma seperated"/>
+               <input
+                  type="text"
+                  id="input"
+                  placeholder="Enter range of numbers with comma seperated"
+               />
                <input type="text" id="output" placeholder="Output: " disabled />
-               <button type="button"> Enter</button>
+               <button type="button">Enter</button>
             </div>
          </div>
          <div class="container-details">
-            <h1></h1>
-            <p></p>
+            <h1>Bubble Sort</h1>
+            <p>
+               Lorem ipsum dolor sit amet consectetur adipisicing elit.
+               Reiciendis quisquam veritatis voluptate atque quam veniam
+               quaerat. Neque distinctio ipsam, voluptas quas ratione modi,
+               laudantium numquam asperiores accusamus deserunt tempora tenetur!
+            </p>
          </div>
       </div>
    </body>
