@@ -1,6 +1,6 @@
 # AlgoVisualize
 
-> Visualize Different Algorithm
+> Visualize Different  Algorithm (only basic  ones)
 
 > Utilizes svg manipulation
 
