@@ -8,7 +8,12 @@
 
    --muted-light: hsl(206 10% 88%);
    --muted-text: hsl(1 1% 23%);
-} 
+
+   --current: hsl(232, 70%, 53%);
+   --correct: hsl(126, 70%, 53%);
+   --swap: hsl(14, 70%, 53%);
+   --sorted: hsl(344, 65%, 58%);
+}
 
 .container {
    position: relative;
@@ -104,8 +109,8 @@ button[type="button"] {
    border: 2px solid var(--accent);
 }
 
-.graph-input > input:focus{
-   outline: none ;
+.graph-input > input:focus {
+   outline: none;
 }
 
 .graph-input > button {
@@ -138,6 +143,23 @@ button[type="button"] {
 /* Toggles */
 
 .selected {
+   /* For dropdown */
    color: var(--light);
+   background-color: var(--accent) !important;
+}
+
+.current {
+   background-color: var(--current) !important;
+}
+
+.correct-value {
+   background-color: var(--correct) !important;
+}
+
+.swapping {
+   background-color: var(--swap) !important;
+}
+
+.sorted {
    background-color: var(--accent) !important;
 }
