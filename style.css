@@ -1,7 +1,7 @@
 @import url("./styles/graph.css");
 
 :root {
-   --light: hsl(206, 10%, %);
+   --light: hsl(206, 10%, 94%);
    --text: hsl(1 1% 13%);
    --shadow: hsl(1 1% 33%);
    --accent: hsl(344, 70%, 53%);
@@ -9,10 +9,10 @@
    --muted-light: hsl(206 10% 88%);
    --muted-text: hsl(1 1% 23%);
 
-   --current: hsl(232, 70%, 53%);
+   --current: hsl(232, 60%, 63%);
    --correct: hsl(126, 70%, 53%);
    --swap: hsl(14, 70%, 53%);
-   --sorted: hsl(344, 65%, 58%);
+   --sorted: hsl(177, 65%, 58%);
 }
 
 .container {
@@ -109,6 +109,7 @@ button[type="button"] {
    border: 2px solid var(--accent);
 }
 
+
 .graph-input > input:focus {
    outline: none;
 }
@@ -117,6 +118,7 @@ button[type="button"] {
    background-color: var(--accent);
    color: var(--light);
    letter-spacing: 10px;
+   font-weight: bolder;
 }
 
 /* Details */
@@ -161,5 +163,5 @@ button[type="button"] {
 }
 
 .sorted {
-   background-color: var(--accent) !important;
+   background-color: var(--sorted) !important;
 }
