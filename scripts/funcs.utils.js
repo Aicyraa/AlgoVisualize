@@ -1,4 +1,4 @@
-export function selectionHandler(event) {
+function selectionHandler(event) {
    const types = document.querySelectorAll(".types");
    const current = event.target;
 
@@ -12,7 +12,7 @@ export function selectionHandler(event) {
    }
 }
 
-export function selectionDropdown() {
+function selectionDropdown() {
    document.querySelector(".container-selection").classList.toggle("show");
    document.querySelector(".dropdown-btn").classList.toggle("show");
 }
@@ -41,6 +41,14 @@ function debounce(func, ms) {
    };
 }
 
+function sleep(ms) {
+   return new Promise(resolve => setTimeout(resolve, ms));
+ }
+
 export {
-   
+   selectionHandler,
+   selectionDropdown,
+   throttle,
+   debounce,
+   sleep
 }
