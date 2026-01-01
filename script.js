@@ -2,6 +2,7 @@ import { bubble, selection } from "./scripts/funcs.algo.js";
 import {
    selectionHandler,
    selectionDropdown,
+   filterValues,
    throttle,
    debounce,
 } from "./scripts/funcs.utils.js";
@@ -25,14 +26,6 @@ const graphInfo = {
    input: document.querySelector("#input"),
    dataPoints: [],
 };
-
-function filterValues(rawValue) {
-   const pattern = /^[0-9]+$/;
-   const values = rawValue.split(",");
-   return values
-      .filter((value) => pattern.test(value))
-      .map((value) => Number(value));
-}
 
 function generateBar(event) {
    graphInfo.graph.innerHTML = "";
@@ -60,11 +53,11 @@ function sort() {
       case "selection":
          selection(values)
          break;
-      // case "insert":
-      //    bubble(values)
-      //    break;
-      // default:
-      //    console.log("None");     
+      case "insert":
+         bubble(values)
+         break;
+      default:
+         console.log("None");     
    }
 
 }
