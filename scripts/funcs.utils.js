@@ -17,6 +17,15 @@ function selectionDropdown() {
    document.querySelector(".dropdown-btn").classList.toggle("show");
 }
 
+function filterValues(rawValue) {
+   const pattern = /^[0-9]+$/;
+   const values = rawValue.split(",");
+   return values
+      .filter((value) => pattern.test(value))
+      .map((value) => Number(value));
+}
+
+
 function throttle(func, ms) {
    let isWaiting = false;
 
@@ -48,6 +57,7 @@ function sleep(ms) {
 export {
    selectionHandler,
    selectionDropdown,
+   filterValues,
    throttle,
    debounce,
    sleep
