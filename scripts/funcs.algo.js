@@ -33,7 +33,6 @@ async function selection(arr) {
       let index = 0;
       for (let j = i; j < n; j++) {
          sortCompare([], false, i, index);
-         console.log(smallest);
          await sleep(sortCompareTime);
          if (smallest >= arr[j]) {
             index = j;
@@ -42,10 +41,27 @@ async function selection(arr) {
       }
       arr[index] = arr[i];
       arr[i] = smallest;
+      // sortCompare([], index, i)
+
       sorted.push(i);
       sortCompare(sorted);
    }
 
+   return arr;
+}
+
+function insertion(arr) {
+   let n = arr.length;
+   [2, 2, 5, 3, 7, 1];
+   for (let i = 0; i < n; i++) {
+      let temp = arr[i];
+      let j = i;
+      while (j > 0 && temp < arr[j - 1]) {
+         arr[j] = arr[j - 1];
+         j -= 1;
+      }
+      arr[j] = temp;
+   }
    return arr;
 }
 
@@ -86,7 +102,7 @@ function sortSwap(idxA, idxB) {
    let elmtA, elmtB, elmtParent;
    let elmtA_Before, elmtA_After;
    let elmtB_Before, elmtB_After;
- 
+
    if (idxA === idxB) return;
    else if (idxA > idxB) [idxA, idxB] = [idxB, idxA];
    elmtA = points[idxA];
@@ -133,4 +149,4 @@ function sortSwap(idxA, idxB) {
    animate();
 }
 
-export { bubble, selection };
+export { bubble, selection, insertion };
