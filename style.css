@@ -34,7 +34,7 @@
    display: flex;
    flex-direction: column;
    gap: 8px;
-   height: 280px;
+   height: 230px;
 }
 
 .container-dropdown > img {
@@ -75,6 +75,7 @@
    padding: 4px 8px;
    text-align: center;
    width: 120px;
+   cursor: pointer;
 }
 
 /* Graph */
@@ -131,6 +132,10 @@ button[type="button"] {
    width: 300px;
    padding: 6px 8px;
    text-align: justify;
+}
+
+.container-details > p {
+   font-size: 14px;
 }
 
 /* Media Query */
