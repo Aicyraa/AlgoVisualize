@@ -33,7 +33,8 @@ function generateBar(event) {
    values.forEach((point, index) => {
       const points = document.createElement("div");
       const height = 5 * point ? 5 * point : 0.8;
-      points.setAttribute("class", `points points-${index + 1}`);
+      points.className = "points"
+      points.dataset.index = index
       points.innerHTML = `
             <span id=text>${point}</span>
             <span id=bar style="height:${height}px;"></span>
