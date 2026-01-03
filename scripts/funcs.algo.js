@@ -1,11 +1,14 @@
+import {
+   sortSwap,
+   sortCompare,
+   sortCompareTime,
+   sortSwapTime,
+} from "./func.algo.animate.js";
 import { sleep } from "./funcs.utils.js";
-
-var sortCompareTime = 800;
-var sortSwapTime = 50;
 
 async function bubble(arr) {
    let sorted = [];
-   let n = arr.length;
+   const n = arr.length;
 
    for (let i = 0; i < n; i++) {
       for (let j = 0; j < n - i - 1; j++) {
@@ -28,15 +31,16 @@ async function selection(arr) {
    // first element always has the "current" class
    // hindi tama ung pag swap bandang gitna
    // issue
-   const last = n - i - 1;
+   
    let sorted = [];
-   let n = arr.length;
+   const n = arr.length;
 
    for (let i = 0; i < n; i++) {
+      const last = n - i - 1;
       let bigIdx = 0;
       for (let j = 0; j < n - i; j++) {
-         sortCompare([], j, undefined, index);
-         await sleep(sortCompareTime + 1000);
+         sortCompare([], j, undefined, bigIdx);
+         await sleep(sortCompareTime);
 
          if (arr[j] >= arr[bigIdx]) {
             bigIdx = j;
@@ -44,21 +48,24 @@ async function selection(arr) {
       }
 
       // swapping the bigIdx to last and vice versa
+      
+      console.log(bigIdx, last);
       sortSwap(bigIdx, last);
-      arr[bigIdx] = arr[last];
-      arr[last] = arr[bigIdx];
+      await sleep(sortSwapTime * 5)
+      console.log("Before: " + arr);
+      [arr[bigIdx], arr[last]] = [arr[last], arr[bigIdx]] 
+      console.log("After: " + arr);
 
       // pushing the last index to the sorted array
       sorted.push(n - i - 1);
       sortCompare(sorted);
       await sleep(sortCompareTime - 500);
    }
-   console.log(arr);
    return arr;
 }
 
 function insertion(arr) {
-   let n = arr.length;
+   const n = arr.length;
    for (let i = 0; i < n; i++) {
       let temp = arr[i];
       let j = i;
@@ -77,6 +84,5 @@ function merge(arr) {
    // consider the first element of both 2 sublist
    // the element who has the first lesser value become the new element
 }
-
 
 export { bubble, selection, insertion };

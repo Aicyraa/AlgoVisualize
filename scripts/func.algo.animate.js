@@ -1,4 +1,6 @@
 // comparing, swapping
+var sortCompareTime = 800;
+var sortSwapTime = 50;
 
 function sortCompare(sorted = [], idxA, idxB, idxSpecial) {
    const points = document.querySelectorAll("#bar");
@@ -36,10 +38,11 @@ function sortCompare(sorted = [], idxA, idxB, idxSpecial) {
    // currect class remove after sortCompareTime
    setTimeout(styleCurrentRemove, sortCompareTime);
    // currect class remove after sortCompareTime
-   setTimeout(styleSpecialRemove, sortCompareTime);
+   setTimeout(styleSpecialRemove, sortCompareTime * 2);
 }
 
 function sortSwap(idxA, idxB) {
+   // need to improve para tumugma sa selection
    const points = document.querySelectorAll(".points");
 
    let elmtA, elmtB, elmtParent;
@@ -56,6 +59,9 @@ function sortSwap(idxA, idxB) {
 
    // for swapping element
    function swap() {
+      // tama ung value from the selection algoritm 
+      // pero d tugma ung index ng array from selection sa visual na nakikita ng user
+      // same index with the same value dapat pero same index different value ang nangyar
       elmtParent.insertBefore(elmtA, elmtB.nextSibling);
       elmtParent.insertBefore(elmtB, elmtA);
    }
@@ -91,4 +97,4 @@ function sortSwap(idxA, idxB) {
    animate();
 }
 
-export { sortCompare, sortSwap };
+export { sortCompare, sortSwap, sortCompareTime, sortSwapTime };
