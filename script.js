@@ -1,4 +1,4 @@
-import { bubble, selection } from "./scripts/funcs.algo.js";
+import { bubble, insertion, selection } from "./scripts/funcs.algo.js";
 import {
    selectionHandler,
    selectionDropdown,
@@ -54,13 +54,21 @@ function sort() {
          selection(values)
          break;
       case "insert":
-         bubble(values)
+         insertion(values)
+         break;
+      case "merge":
+         // merge(values)
+         break;
+      case "quick":
+         // quick(values)
          break;
       default:
          console.log("None");     
    }
 
 }
+
+
 
 (function () {
    const selectionContainer = document.querySelector(".container-selection");
@@ -72,4 +80,4 @@ function sort() {
    graphInfo.input.addEventListener("input", throttle(generateBar, 2000));
 })();
 
-// console.log(selection([23, 21, 4, 100, 200, 3, 10, 20, 3, 50, 5, 40, 40]));
+// console.log(insertion([2,5,2,3,7,1]));
