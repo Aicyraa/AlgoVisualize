@@ -1,5 +1,5 @@
 // comparing, swapping
-var sortCompareTime = 200;
+var sortCompareTime = 1000;
 var sortSwapTime = 50;
 
 function sortCompare(sorted = [], idxA, idxB, idxSpecial) {
@@ -59,8 +59,12 @@ function sortSwap(idxA, idxB) {
 
    function swap() {
       // swapping element
+      let points1 = getOrder()
       grapgContainer.insertBefore(elmtA, elmtB.nextSibling);
+      let points2 = getOrder()
+      let newEl = points2[idxA]
       grapgContainer.insertBefore(elmtB, getOrder()[idxA]);   
+      let points3 = getOrder()
    }
 
    function animate() {

@@ -1,8 +1,4 @@
-import {
-   sortSwap,
-   sortCompare,
-   sortCompareTime,
-} from "./func.algo.animate.js";
+import { sortSwap, sortCompare, sortCompareTime } from "./func.algo.animate.js";
 import { sleep } from "./funcs.utils.js";
 
 async function bubble(arr) {
@@ -52,16 +48,19 @@ async function selection(arr) {
    return arr;
 }
 
-function insertion(arr) {
+async function insertion(arr) {
    const n = arr.length;
    for (let i = 0; i < n; i++) {
-      let temp = arr[i];
       let j = i;
-      while (j > 0 && temp < arr[j - 1]) {
-         arr[j] = arr[j - 1];
+
+      while (j > 0 && arr[j] < arr[j - 1]) {
+         sortCompare([], undefined, j - 1, j);
+         await sleep(sortCompareTime);
+         
+         sortSwap(j, j - 1);
+         [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]]
          j -= 1;
       }
-      arr[j] = temp;
    }
    return arr;
 }
