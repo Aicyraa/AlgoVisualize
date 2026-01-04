@@ -1,4 +1,4 @@
-import { bubble, insertion, selection } from "./scripts/funcs.algo.js";
+import { bubble, selection, insertion  } from "./scripts/funcs.algo.js";
 import {
    selectionHandler,
    selectionDropdown,
@@ -54,7 +54,7 @@ function sort() {
       case "selection":
          selection(values)
          break;
-      case "insert":
+      case "insertion":
          insertion(values)
          break;
       case "merge":
