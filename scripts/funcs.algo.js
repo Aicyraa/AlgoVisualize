@@ -2,7 +2,6 @@ import {
    sortSwap,
    sortCompare,
    sortCompareTime,
-   sortSwapTime,
 } from "./func.algo.animate.js";
 import { sleep } from "./funcs.utils.js";
 
@@ -28,10 +27,6 @@ async function bubble(arr) {
 }
 
 async function selection(arr) {
-   // first element always has the "current" class
-   // hindi tama ung pag swap bandang gitna
-   // issue
-   
    let sorted = [];
    const n = arr.length;
 
@@ -47,16 +42,9 @@ async function selection(arr) {
          }
       }
 
-      // swapping the bigIdx to last and vice versa
-      
-      console.log(bigIdx, last);
       sortSwap(bigIdx, last);
-      await sleep(sortSwapTime * 5)
-      console.log("Before: " + arr);
-      [arr[bigIdx], arr[last]] = [arr[last], arr[bigIdx]] 
-      console.log("After: " + arr);
+      [arr[bigIdx], arr[last]] = [arr[last], arr[bigIdx]];
 
-      // pushing the last index to the sorted array
       sorted.push(n - i - 1);
       sortCompare(sorted);
       await sleep(sortCompareTime - 500);

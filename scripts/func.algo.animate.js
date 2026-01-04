@@ -1,5 +1,5 @@
 // comparing, swapping
-var sortCompareTime = 800;
+var sortCompareTime = 200;
 var sortSwapTime = 50;
 
 function sortCompare(sorted = [], idxA, idxB, idxSpecial) {
@@ -33,50 +33,40 @@ function sortCompare(sorted = [], idxA, idxB, idxSpecial) {
       });
    }
 
-   // style add
    styleAdd();
-   // currect class remove after sortCompareTime
    setTimeout(styleCurrentRemove, sortCompareTime);
-   // currect class remove after sortCompareTime
    setTimeout(styleSpecialRemove, sortCompareTime * 2);
 }
 
 function sortSwap(idxA, idxB) {
-   // need to improve para tumugma sa selection
-   const points = document.querySelectorAll(".points");
 
-   let elmtA, elmtB, elmtParent;
-   let elmtA_Before, elmtA_After;
-   let elmtB_Before, elmtB_After;
+   if (idxA > idxB) [idxA, idxB] = [idxB, idxA];
+   if (idxA == idxB) return;
 
-   // for easy logic, the first index must be the first element
-   if (idxA === idxB) return;
-   else if (idxA > idxB) [idxA, idxB] = [idxB, idxA];
+   const grapgContainer = document.querySelector(".graph");
 
-   elmtA = points[idxA];
-   elmtB = points[idxB];
-   elmtParent = elmtA.parentNode;
-
-   // for swapping element
-   function swap() {
-      // tama ung value from the selection algoritm 
-      // pero d tugma ung index ng array from selection sa visual na nakikita ng user
-      // same index with the same value dapat pero same index different value ang nangyar
-      elmtParent.insertBefore(elmtA, elmtB.nextSibling);
-      elmtParent.insertBefore(elmtB, elmtA);
+   function getOrder() {
+      // returns the updated order specially after swapping
+      return [...document.querySelectorAll(".points")];
    }
 
-   // for getting the before and after position
-   function position() {
+   function getPosition() {
+      // get position for animation
       const A = elmtA.getBoundingClientRect();
       const B = elmtB.getBoundingClientRect();
       return [A.left, B.left];
    }
 
-   // applying the visual animation after the script
+   function swap() {
+      // swapping element
+      grapgContainer.insertBefore(elmtA, elmtB.nextSibling);
+      grapgContainer.insertBefore(elmtB, getOrder()[idxA]);   
+   }
+
    function animate() {
-      elmtA.style.transform = `translateX(${elmtA_Before - elmtA_After}px)`;
-      elmtB.style.transform = `translateX(${elmtB_Before - elmtB_After}px)`;
+      elmtA.style.transform = `translateX(${elmtA_BP1 - elmtA_AP2}px)`;
+      elmtB.style.transform = `translateX(${elmtB_BP1 - elmtB_AP2}px)`;
+
       setTimeout(() => {
          [elmtA, elmtB].forEach((elmt) => {
             elmt.classList.add("swap");
@@ -88,13 +78,14 @@ function sortSwap(idxA, idxB) {
          [elmtA, elmtB].forEach((elmt) => {
             elmt.classList.remove("swap");
          });
-      }, sortSwapTime + 100);
+      }, sortSwapTime + 50);
    }
 
-   [elmtA_Before, elmtB_Before] = position();
-   swap();
-   [elmtA_After, elmtB_After] = position();
-   animate();
+   let elmtA = getOrder()[idxA];
+   let elmtB = getOrder()[idxB];
+   let [elmtA_BP1, elmtB_BP1] = getPosition();
+   swap()
+   let [elmtA_AP2, elmtB_AP2] = getPosition();
+   animate()
 }
-
 export { sortCompare, sortSwap, sortCompareTime, sortSwapTime };
