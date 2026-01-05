@@ -1,4 +1,10 @@
-import { sortSwap, sortCompare, sortCompareTime } from "./func.algo.animate.js";
+import {
+   sortCompare,
+   sortSwap,
+   sortStatusLog,
+   sortCompareTime,
+   sortSwapTime,
+} from "./func.algo.animate.js";
 import { sleep } from "./funcs.utils.js";
 
 async function bubble(arr) {
@@ -7,19 +13,34 @@ async function bubble(arr) {
 
    for (let i = 0; i < n; i++) {
       for (let j = 0; j < n - i - 1; j++) {
+         sortStatusLog(false, {
+            status: "Comparing",
+            value: `is ${arr[j]} <b> > </b> ${arr[j + 1]}`,
+         });
          sortCompare([], j, j + 1);
          await sleep(sortCompareTime);
 
          if (arr[j] > arr[j + 1]) {
+
+            sortStatusLog("swap", { 
+               status: "Swapping", 
+               value: ""
+            });
             await sortSwap(j, j + 1);
+            await sleep(sortSwapTime * 2);
+
             let temp = arr[j];
             arr[j] = arr[j + 1];
             arr[j + 1] = temp;
          }
       }
+
       sorted.push(n - i - 1);
       sortCompare(sorted);
+      await sleep(sortCompareTime);
    }
+
+   sortStatusLog("reset", { status: "Finished", value: "" });
 }
 
 async function selection(arr) {
@@ -45,7 +66,6 @@ async function selection(arr) {
       sortCompare(sorted);
       await sleep(sortCompareTime - 500);
    }
-   return arr;
 }
 
 async function insertion(arr) {
@@ -56,9 +76,9 @@ async function insertion(arr) {
       while (j > 0 && arr[j] < arr[j - 1]) {
          sortCompare([], undefined, j - 1, j);
          await sleep(sortCompareTime);
-         
+
          await sortSwap(j, j - 1);
-         [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]]
+         [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
          j -= 1;
       }
    }

@@ -1,6 +1,7 @@
 // comparing, swapping
-var sortCompareTime = 500;
+var sortCompareTime = 700;
 var sortSwapTime = 50;
+var swapCount = 1;
 
 function sortCompare(sorted = [], idxA, idxB, idxSpecial) {
    const points = document.querySelectorAll("#bar");
@@ -35,7 +36,7 @@ function sortCompare(sorted = [], idxA, idxB, idxSpecial) {
 
    styleAdd();
    setTimeout(styleCurrentRemove, sortCompareTime);
-   setTimeout(styleSpecialRemove, sortCompareTime * 2);
+   setTimeout(styleSpecialRemove, sortCompareTime * 4);
 }
 
 async function sortSwap(idxA, idxB) {
@@ -101,4 +102,24 @@ async function sortSwap(idxA, idxB) {
    let positons = swap();
    animate(...positons);
 }
-export { sortCompare, sortSwap, sortCompareTime, sortSwapTime };
+
+function sortStatusLog(countSwap, logMessage) {
+   // wala pang reset ng swap counter
+   // dapat "done" ang lalabag pag tapos ng loop
+   const statusIdentifier = document.querySelector("#status");
+   const status = document.querySelector("#status-value");
+   const count = document.querySelector("#swap-count");
+
+   if (countSwap == "swap") {
+      count.textContent = swapCount++;
+   } else if (countSwap == "reset") {
+      countSwap = 1;
+   }
+
+   if (logMessage) {
+      statusIdentifier.textContent = logMessage.status;
+      status.innerHTML = logMessage.value;
+   }
+}
+
+export { sortCompare, sortSwap, sortStatusLog, sortCompareTime, sortSwapTime };
