@@ -68,10 +68,6 @@
    border-radius: 4px;
 }
 
-.details-status .status-topic ~ span {
-   padding-left: 3px;
-   border-left: 3px solid var(--accent);
-}
 /* Inputs */
 
 .details-input {
