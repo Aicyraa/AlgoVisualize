@@ -4,6 +4,9 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>AlgoVisual</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet"/>
       <link rel="stylesheet" href="style.css" />
       <script src="script.js" type="module" defer></script>
       <style>
@@ -11,6 +14,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: "Jetbrains Mono", sans-serif, monospace;
          }
 
          html,
@@ -28,7 +32,7 @@
    <body>
       <div class="container">
          <div class="container-dropdown">
-            <img src="arrow.svg" class="dropdown-btn" />
+            <img src="./svg/arrow.svg" class="dropdown-btn" />
             <div class="container-selection">
                <span class="types selected" data-type="bubble">Bubble </span>
                <span class="types" data-type="selection">Selection </span>
@@ -38,23 +42,20 @@
                <!-- <span class="types" data-type="linear">Linear </span> -->
                <!-- <span class="types" data-type="binary">Binary </span> -->
             </div>
+            
          </div>
          <div class="container-graph">
             <!-- MAIN GRAPH -->
             <div class="graph"></div>
-            <div class="graph-input">
-               <input type="text" id="input" placeholder="Enter range of numbers with comma seperated"/>
-               <button type="button" id="start">Start</button>
-            </div>
+            <div class="graph-status"></div>
          </div>
          <div class="container-details">
-            <h1 id="topic">Bubble Sort</h1>
-            <p id="desc">
-               Lorem ipsum dolor sit amet consectetur adipisicing elit.
-               Reiciendis quisquam veritatis voluptate atque quam veniam
-               quaerat. Neque distinctio ipsam, voluptas quas ratione modi,
-               laudantium numquam asperiores accusamus deserunt tempora tenetur!
-            </p>
+            <h1 id="details-topic"></h1>
+            <p id="details-desc"></p>
+            <div class="details-input">
+               <input type="text" id="input" placeholder="Enter range of numbers with comma seperated" />
+               <button type="button" id="start">Start</button>
+            </div>
          </div>
       </div>
    </body>
