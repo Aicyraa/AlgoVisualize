@@ -1,20 +1,12 @@
-import { bubble, selection, insertion  } from "./scripts/funcs.algo.js";
+import { bubble, selection, insertion } from "./scripts/funcs.algo.js";
 import {
    selectionHandler,
    selectionDropdown,
    filterValues,
    throttle,
    debounce,
+   selectionInfos,
 } from "./scripts/funcs.utils.js";
-/* 
-
-   1. function that generate a bar 
-   2. decorator func that debounce a function
-   3. a global variable that holds the value of the data in the graph
-   4. function for animation for handling the animation
-   5. modularized the function each algorithm
-
-*/
 
 const graphInfo = {
    type: function () {
@@ -33,8 +25,8 @@ function generateBar(event) {
    values.forEach((point, index) => {
       const points = document.createElement("div");
       const height = 5 * point ? 5 * point : 0.8;
-      points.className = "points"
-      points.dataset.index = index
+      points.className = "points";
+      points.dataset.index = index;
       points.innerHTML = `
             <span id=text>${point}</span>
             <span id=bar style="height:${height}px;"></span>
@@ -43,19 +35,19 @@ function generateBar(event) {
    });
 }
 
-function sort() {
+function sortType() {
    const values = filterValues(graphInfo.input.value);
    const selectedType = graphInfo.type();
-   
-   switch(selectedType[0].dataset.type) {
+
+   switch (selectedType[0].dataset.type) {
       case "bubble":
-         bubble(values)
+         bubble(values);
          break;
       case "selection":
-         selection(values)
+         selection(values);
          break;
       case "insertion":
-         insertion(values)
+         insertion(values);
          break;
       case "merge":
          // merge(values)
@@ -64,21 +56,21 @@ function sort() {
          // quick(values)
          break;
       default:
-         console.log("None");     
+         console.log("None");
    }
-
 }
-
-
 
 (function () {
    const selectionContainer = document.querySelector(".container-selection");
    const dropdownBtn = document.querySelector(".dropdown-btn");
    const start = document.querySelector("#start");
+   const input = document.querySelector("#input")
+
+   selectionInfos(graphInfo.type()[0].dataset.type);
    selectionContainer.addEventListener("click", selectionHandler);
    dropdownBtn.addEventListener("click", selectionDropdown);
-   start.addEventListener("click", sort);
-   graphInfo.input.addEventListener("input", throttle(generateBar, 2000));
+   start.addEventListener("click", sortType);
+   input.addEventListener("input", throttle(generateBar, 2000));
 })();
 
 // console.log(insertion([2,5,2,3,7,1]));
