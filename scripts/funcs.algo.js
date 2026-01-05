@@ -11,7 +11,7 @@ async function bubble(arr) {
          await sleep(sortCompareTime);
 
          if (arr[j] > arr[j + 1]) {
-            sortSwap(j, j + 1);
+            await sortSwap(j, j + 1);
             let temp = arr[j];
             arr[j] = arr[j + 1];
             arr[j + 1] = temp;
@@ -38,7 +38,7 @@ async function selection(arr) {
          }
       }
 
-      sortSwap(bigIdx, last);
+      await sortSwap(bigIdx, last);
       [arr[bigIdx], arr[last]] = [arr[last], arr[bigIdx]];
 
       sorted.push(n - i - 1);
@@ -57,7 +57,7 @@ async function insertion(arr) {
          sortCompare([], undefined, j - 1, j);
          await sleep(sortCompareTime);
          
-         sortSwap(j, j - 1);
+         await sortSwap(j, j - 1);
          [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]]
          j -= 1;
       }

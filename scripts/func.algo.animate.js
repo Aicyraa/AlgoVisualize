@@ -38,38 +38,47 @@ function sortCompare(sorted = [], idxA, idxB, idxSpecial) {
    setTimeout(styleSpecialRemove, sortCompareTime * 2);
 }
 
-function sortSwap(idxA, idxB) {
-
+async function sortSwap(idxA, idxB) {
    if (idxA > idxB) [idxA, idxB] = [idxB, idxA];
    if (idxA == idxB) return;
 
    const grapgContainer = document.querySelector(".graph");
 
    function getOrder() {
-      // returns the updated order specially after swapping
-      return [...document.querySelectorAll(".points")];
+      // Force fresh DOM query
+      return Array.from(grapgContainer.children).filter((el) =>
+         el.classList.contains("points")
+      );
    }
 
-   function getPosition() {
-      // get position for animation
-      const A = elmtA.getBoundingClientRect();
-      const B = elmtB.getBoundingClientRect();
-      return [A.left, B.left];
+   function getPosition(element) {
+      return element.getBoundingClientRect().left;
    }
 
    function swap() {
-      // swapping element
-      let points1 = getOrder()
-      grapgContainer.insertBefore(elmtA, elmtB.nextSibling);
-      let points2 = getOrder()
-      let newEl = points2[idxA]
-      grapgContainer.insertBefore(elmtB, getOrder()[idxA]);   
-      let points3 = getOrder()
+      // get the position before swapping
+      let posA_before = getPosition(elmtA);
+      let posB_before = getPosition(elmtB);
+
+      if (idxB - idxA === 1) {
+         grapgContainer.insertBefore(elmtB, elmtA);
+      } else {
+         const nextA = elmtA.nextSibling;
+         const nextB = elmtB.nextSibling;
+         grapgContainer.insertBefore(elmtA, nextB);
+         grapgContainer.insertBefore(elmtB, nextA);
+      }
+
+      // get the position after swapping
+      let posA_after = getPosition(elmtA);
+      let posB_after = getPosition(elmtB);
+
+      return [posA_before, posB_before, posA_after, posB_after];
    }
 
-   function animate() {
-      elmtA.style.transform = `translateX(${elmtA_BP1 - elmtA_AP2}px)`;
-      elmtB.style.transform = `translateX(${elmtB_BP1 - elmtB_AP2}px)`;
+   function animate(posA_before, posB_before, posA_after, posB_after) {
+      elmtA.style.transform = `translateX(${posA_before - posA_after}px)`;
+      elmtB.style.transform = `translateX(${posB_before - posB_after}px)`;
 
       setTimeout(() => {
          [elmtA, elmtB].forEach((elmt) => {
@@ -85,11 +94,11 @@ function sortSwap(idxA, idxB) {
       }, sortSwapTime + 50);
    }
 
-   let elmtA = getOrder()[idxA];
-   let elmtB = getOrder()[idxB];
-   let [elmtA_BP1, elmtB_BP1] = getPosition();
-   swap()
-   let [elmtA_AP2, elmtB_AP2] = getPosition();
-   animate()
+   // Get FRESH order
+   let order = getOrder();
+   let elmtA = order[idxA];
+   let elmtB = order[idxB];
+   let positons = swap();
+   animate(...positons);
 }
 export { sortCompare, sortSwap, sortCompareTime, sortSwapTime };
