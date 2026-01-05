@@ -1,5 +1,5 @@
 // comparing, swapping
-var sortCompareTime = 700;
+var sortSpeed = 700;
 var sortSwapTime = 50;
 var swapCount = 1;
 
@@ -35,8 +35,8 @@ function sortCompare(sorted = [], idxA, idxB, idxSpecial) {
    }
 
    styleAdd();
-   setTimeout(styleCurrentRemove, sortCompareTime);
-   setTimeout(styleSpecialRemove, sortCompareTime * 4);
+   setTimeout(styleCurrentRemove, sortSpeed);
+   setTimeout(styleSpecialRemove, sortSpeed * 4);
 }
 
 async function sortSwap(idxA, idxB) {
@@ -86,7 +86,7 @@ async function sortSwap(idxA, idxB) {
             elmt.classList.add("swap");
             elmt.style.transform = `translateX(0px)`;
          });
-      }, sortSwapTime);
+      }, sortSwapTime);4,2,19,3,12,14,1,3,4,2
 
       setTimeout(() => {
          [elmtA, elmtB].forEach((elmt) => {
@@ -113,7 +113,7 @@ function sortStatusLog(countSwap, logMessage) {
    if (countSwap == "swap") {
       count.textContent = swapCount++;
    } else if (countSwap == "reset") {
-      countSwap = 1;
+      swapCount = 1;
    }
 
    if (logMessage) {
@@ -122,4 +122,4 @@ function sortStatusLog(countSwap, logMessage) {
    }
 }
 
-export { sortCompare, sortSwap, sortStatusLog, sortCompareTime, sortSwapTime };
+export { sortCompare, sortSwap, sortStatusLog, sortSpeed, sortSwapTime };
