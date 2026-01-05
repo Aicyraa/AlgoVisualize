@@ -1,12 +1,18 @@
+
 .container-dropdown {
    position: absolute;
-   top: -3rem;
-   left: -3rem;
    display: flex;
    flex-direction: column;
    gap: 8px;
    height: 230px;
 }
+
+.container-dropdown.algorithm-type {
+   z-index: 2;
+   top: 3.5rem;
+   left: 3.5rem;
+}
+
 
 .container-dropdown > img {
    background-color: var(--light);

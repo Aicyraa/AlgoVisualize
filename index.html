@@ -6,7 +6,10 @@
       <title>AlgoVisual</title>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet"/>
+      <link
+         href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+         rel="stylesheet"
+      />
       <link rel="stylesheet" href="style.css" />
       <script src="script.js" type="module" defer></script>
       <style>
@@ -30,30 +33,42 @@
       </style>
    </head>
    <body>
-      <div class="container">
-         <div class="container-dropdown">
-            <img src="./svg/arrow.svg" class="dropdown-btn" />
-            <div class="container-selection">
-               <span class="types selected" data-type="bubble">Bubble </span>
-               <span class="types" data-type="selection">Selection </span>
-               <span class="types" data-type="insertion">Insertion </span>
-               <span class="types" data-type="merge">Merge </span>
-               <span class="types" data-type="quick">Quick </span>
-               <!-- <span class="types" data-type="linear">Linear </span> -->
-               <!-- <span class="types" data-type="binary">Binary </span> -->
-            </div>
-            
+      <!-- Algoritm Selection Section -->
+      <div class="container-dropdown algorithm-type">
+         <img src="./svg/arrow.svg" class="dropdown-btn" />
+         <div class="container-selection">
+            <span class="types selected" data-type="bubble">Bubble </span>
+            <span class="types" data-type="selection">Selection </span>
+            <span class="types" data-type="insertion">Insertion </span>
+            <span class="types" data-type="merge">Merge </span>
+            <span class="types" data-type="quick">Quick </span>
          </div>
+      </div>
+
+      <!-- Graph Section -->
+      <div class="container">
          <div class="container-graph">
-            <!-- MAIN GRAPH -->
             <div class="graph"></div>
-            <div class="graph-status"></div>
          </div>
          <div class="container-details">
             <h1 id="details-topic"></h1>
             <p id="details-desc"></p>
+            <div class="details-status">
+               <div class="statusA">
+                  <span class="status-topic" id="status-log">Status</span>
+                  <span id="status">Is 2 < 3</span>
+               </div>
+               <div class="statusB">
+                  <span class="status-topic">Swap Count</span>
+                  <span id="swap-count"> 10</span>
+               </div>
+            </div>
             <div class="details-input">
-               <input type="text" id="input" placeholder="Enter range of numbers with comma seperated" />
+               <input
+                  type="text"
+                  id="input"
+                  placeholder="Enter range of numbers (comma seperated)"
+               />
                <button type="button" id="start">Start</button>
             </div>
          </div>

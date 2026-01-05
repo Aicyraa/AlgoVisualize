@@ -4,6 +4,8 @@
 :root {
    --light: hsl(206, 10%, 94%);
    --text: hsl(1 1% 13%);
+   --text-light: hsl(1 1% 95%);
+
    --shadow: hsl(1 1% 33%);
    --accent: hsl(344, 70%, 53%);
 
@@ -23,6 +25,7 @@
 }
 
 .container {
+   z-index: 0;
    position: relative;
    display: flex;
    justify-content: center;
@@ -32,34 +35,64 @@
    width: max(200px, 80vw);
 }
 
-
-/* Graph */
-.container-graph {
-   background-color: var(--light);
-   box-shadow: 0 0 4px var(--shadow), 0 0 6px hsl(0, 1%, 22%) inset;
-   flex: 1 2 auto;
+/* Details */
+.container-details {
+   flex-shrink: 2;
    display: flex;
    flex-direction: column;
-   justify-content: center;
    height: 100%;
-   border-radius: 1rem;
-   padding: 8px;
-   overflow: hidden;
+   width: 350px;
+   padding: 6px 8px;
+   text-align: justify;
+   transition: 500ms ease;
 }
+
+.container-details > p {
+   flex-grow: 1;
+   font-size: 12px;
+}
+
+/* Status */
+
+.details-status {
+   display: flex;
+   flex-direction: column;
+   gap: 0.5rem;
+}
+
+.details-status .status-topic {
+   background-color: var(--accent);
+   color: var(--text-light);
+   padding: 2px 6px;
+   font-weight: 600;
+   border-radius: 4px;
+}
+
+.details-status .status-topic ~ span {
+   padding-left: 3px;
+   border-left: 3px solid var(--accent);
+}
+/* Inputs */
 
 .details-input {
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
-   gap: 1rem;
+   gap: 8px;
    padding: 8px 2px;
 }
 
 .details-input > input {
    border: none;
    font-size: 1.05rem;
-   box-shadow: 0 0 5px var(--shadow), 0 0 3px hsl(0, 1%, 22%) inset;
+   box-shadow: 0 0 4px var(--shadow), 0 0 2px hsl(0, 1%, 22%) inset;
+}
+
+.details-input > input::placeholder {
+   color: var(--muted-text);
+   font-size: 0.8rem;
+   font-weight: bolder;
 }
 
 .details-input > input,
@@ -80,25 +113,7 @@ button[type="button"] {
    letter-spacing: 10px;
    font-weight: bolder;
    font-size: 1.5rem;
-   box-shadow: 0 0 5px var(--shadow), 0 0 3px hsl(0, 1%, 22%) inset;
-}
-
-/* Details */
-
-.container-details {
-   flex-shrink: 2;
-   display: flex;
-   flex-direction: column;
-   height: 100%;
-   width: 350px;
-   padding: 6px 8px;
-   text-align: justify;
-   transition: 500ms ease;
-}
-
-.container-details > p {
-   flex-grow: 1;
-   font-size: 14px;
+   box-shadow: 0 0 4px var(--shadow), 0 0 2px hsl(0, 1%, 22%) inset;
 }
 
 /* Media Query */
@@ -124,10 +139,6 @@ button[type="button"] {
 
 .correct-value {
    background-color: var(--correct) !important;
-}
-
-.swapping {
-   background-color: var(--swap) !important;
 }
 
 .sorted {
