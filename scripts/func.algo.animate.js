@@ -1,5 +1,5 @@
 // comparing, swapping
-var sortCompareTime = 1000;
+var sortCompareTime = 500;
 var sortSwapTime = 50;
 
 function sortCompare(sorted = [], idxA, idxB, idxSpecial) {

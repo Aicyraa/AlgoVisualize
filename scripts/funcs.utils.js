@@ -43,8 +43,8 @@ function selectionInfos(topicChoice) {
    };
 
    document.querySelector(".graph").innerHTML = ""
-   document.querySelector("#topic").textContent = infos[`${topicChoice}`].topic;
-   document.querySelector("#desc").textContent = infos[`${topicChoice}`].desc;
+   document.querySelector("#details-topic").textContent = infos[`${topicChoice}`].topic;
+   document.querySelector("#details-desc").textContent = infos[`${topicChoice}`].desc;
 }
 
 function filterValues(rawValue) {
@@ -86,6 +86,7 @@ function sleep(ms) {
 export {
    selectionHandler,
    selectionDropdown,
+   selectionInfos,
    filterValues,
    throttle,
    debounce,
