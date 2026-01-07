@@ -79,14 +79,49 @@
                </div>
             </div>
             <div class="details-input">
-               <input
-                  type="text"
-                  id="input"
-                  placeholder="Enter range of numbers (comma seperated)"
-               />
-               <button type="button" id="start">Start</button>
-            </div>
+               <div class="group input-custom ">
+                   <span class="input-label">Custom Points</span>
+                   <input type="text" id="custom-value" placeholder="e.g., 5, 3, 8, 1, 9, 2" />
+                   <button type="button" id="custom-start">Generate</button>
+               </div>
+               
+               <div class="group input-random active">
+                   <span class="input-label">Random Points</span>
+                   <input type="number" id="random-value" placeholder="Enter number of elements " /> 
+                   <button type="button" id="custom-random">Generate</button>
+               </div>
+               
+               <div class="input-btn">
+                   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                       <path d="M7 10l5 5 5-5z" />
+                   </svg>
+               </div>
+           </div>
          </div>
       </div>
    </body>
+   <script>
+          const inputBtn = document.querySelector('.input-btn');
+        const customGroup = document.querySelector('.input-custom');
+        const randomGroup = document.querySelector('.input-random');
+        
+        let isCustomActive = true;
+
+        inputBtn.addEventListener('click', () => {
+            // Toggle the active state
+            isCustomActive = !isCustomActive;
+            
+            // Toggle rotation of arrow
+            inputBtn.classList.toggle('rotated');
+            
+            // Toggle visibility of groups
+            if (isCustomActive) {
+                customGroup.classList.add('active');
+                randomGroup.classList.remove('active');
+            } else {
+                customGroup.classList.remove('active');
+                randomGroup.classList.add('active');
+            }
+        });
+   </script>
 </html>
