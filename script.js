@@ -2,10 +2,11 @@ import { bubble, selection, insertion } from "./scripts/funcs.algo.js";
 import {
    selectionHandler,
    selectionDropdown,
+   selectionInfos,
+   selectionInput,
    filterValues,
    throttle,
    debounce,
-   selectionInfos,
 } from "./scripts/funcs.utils.js";
 
 const graphInfo = {
@@ -62,16 +63,17 @@ function sortType() {
 
 (function () {
    const dropdownBtn = document.querySelector(".dropdown-btn");
+   const dropdownContainer = document.querySelector(".container-dropdown");
+   const inputToggle = document.querySelector('.input-btn');
+   
    // const start = document.querySelector("#start");
    // const input = document.querySelector("#input")
-   
-   // const selectionContainer = document.querySelector(".container-selection");
 
    selectionInfos(graphInfo.type()[0].dataset.type);
-   // selectionContainer.addEventListener("click", selectionHandler);
    dropdownBtn.addEventListener("click", selectionDropdown);
+   dropdownContainer.addEventListener("click", selectionHandler);
+   inputToggle.addEventListener("click", selectionInput)
+
    // start.addEventListener("click", sortType);
    // input.addEventListener("input", throttle(generateBar, 2000));
 })();
-
-// console.log(insertion([2,5,2,3,7,1]));
