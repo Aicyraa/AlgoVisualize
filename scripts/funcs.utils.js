@@ -5,21 +5,33 @@ function selectionDropdown() {
 }
 
 function selectionHandler(event) {
-   // for selecting .types
    const types = document.querySelectorAll(".types");
+   const speeds = document.querySelectorAll(".speeds");
    const current = event.target;
+   
+      if (current.className !== "types" && current.className !== "speeds") return
 
-   if (current.dataset.type == undefined) {
-      return;
-   } else {
+   function removeSelectedTypes() {
       types.forEach((element) => {
          element.classList.remove("selected");
       });
+   }
+
+   function removeSelectedSpeed() {
+      speeds.forEach((element) => {
+         element.classList.remove("selected");
+      });
+   }
+
+   if (current.className == "types") {
+      removeSelectedTypes();
+      current.classList.add("selected");
       selectionInfos(current.dataset.type);
+   } else if (current.className == "speeds") {
+      removeSelectedSpeed();
       current.classList.add("selected");
    }
 }
-
 
 function selectionInfos(topicChoice) {
    // for rendering desctiption
@@ -46,7 +58,15 @@ function selectionInfos(topicChoice) {
       },
    };
 
-   document.querySelector(".graph").innerHTML = ""
+   const speed = {
+      1: "0.5x",
+      2: "0.75x",
+      3: "1.00x",
+      4: "1.25x",
+      5: "2.00x",
+   };
+
+   document.querySelector(".graph").innerHTML = "";
    document.querySelector("#details-topic").textContent = infos[`${topicChoice}`].topic;
    document.querySelector("#details-desc").textContent = infos[`${topicChoice}`].desc;
 }
