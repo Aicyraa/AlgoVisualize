@@ -1,3 +1,4 @@
+import { sortSpeed } from "./scripts/func.algo.animate.js";
 import { bubble, selection, insertion } from "./scripts/funcs.algo.js";
 import {
    selectionHandler,
@@ -10,19 +11,20 @@ import {
 } from "./scripts/funcs.utils.js";
 
 const graphInfo = {
+   graph: document.querySelector(".graph"),
    type: function () {
       const types = Array.from(document.querySelectorAll(".types"));
       return types.filter((type) => type.classList.contains("selected"));
    },
-
-   graph: document.querySelector(".graph"),
-   input: document.querySelector("#input"),
-   dataPoints: [],
+   speed: function () {
+      const speeds = Array.from(document.querySelectorAll(".speeds"));
+      return speeds.filter((speed) => speed.classList.contains("selected"));
+   },
 };
 
-function generateBar(event) {
+function generateBar(values) {
    graphInfo.graph.innerHTML = "";
-   let values = filterValues(event.value);
+   
    values.forEach((point, index) => {
       const points = document.createElement("div");
       const height = 5 * point ? 5 * point : 0.8;
@@ -36,19 +38,61 @@ function generateBar(event) {
    });
 }
 
-function sortType() {
-   const values = filterValues(graphInfo.input.value);
-   const selectedType = graphInfo.type();
+function dataCustom(generate) {
+   return function(event){
+      const input = event.currentTarget;
+      const value = filterValues(input.value)
+      generate(value)
+   }
+}
 
+function dataRandom(generate) {
+   return function(event) {
+      const input = event.currentTarget
+      let points = [];
+      for(let i = 0; i < input.value; i++) {
+         points.push(Math.floor(Math.random() * 20));
+      }
+      generate(points)
+   } 
+}
+
+(function () {
+
+   selectionInfos(graphInfo.type()[0].dataset.type);
+   generateBar = throttle(generateBar, 2000)
+
+   const dropdownBtn = document.querySelector(".dropdown-btn");
+   const dropdownContainer = document.querySelector(".container-dropdown");
+   const inputToggle = document.querySelector(".input-btn");
+   const inputCustom = document.querySelector("#custom-value");
+   const inputRandom = document.querySelector("#random-value");
+
+   dropdownBtn.addEventListener("click", selectionDropdown);
+   dropdownContainer.addEventListener("click", selectionHandler);
+   inputToggle.addEventListener("click", selectionInput);
+   inputCustom.addEventListener("input", dataCustom(generateBar));
+   inputRandom.addEventListener("input", dataRandom(generateBar));
+
+   // generate that has a throttle
+   // may isang functino na mag rreturn ng value from the visual (generated bar)
+
+ 
+})();
+
+
+/* 
+function sortType(data) {
+   const selectedType = graphInfo.type();
    switch (selectedType[0].dataset.type) {
       case "bubble":
-         bubble(values);
+         bubble(data);
          break;
       case "selection":
-         selection(values);
+         selection(data);
          break;
       case "insertion":
-         insertion(values);
+         insertion(data);
          break;
       case "merge":
          // merge(values)
@@ -60,20 +104,4 @@ function sortType() {
          console.log("None");
    }
 }
-
-(function () {
-   const dropdownBtn = document.querySelector(".dropdown-btn");
-   const dropdownContainer = document.querySelector(".container-dropdown");
-   const inputToggle = document.querySelector('.input-btn');
-   
-   // const start = document.querySelector("#start");
-   // const input = document.querySelector("#input")
-
-   selectionInfos(graphInfo.type()[0].dataset.type);
-   dropdownBtn.addEventListener("click", selectionDropdown);
-   dropdownContainer.addEventListener("click", selectionHandler);
-   inputToggle.addEventListener("click", selectionInput)
-
-   // start.addEventListener("click", sortType);
-   // input.addEventListener("input", throttle(generateBar, 2000));
-})();
+*/
