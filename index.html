@@ -33,63 +33,94 @@
       </style>
    </head>
    <body>
-      <!-- Algoritm Selection Section -->
-      <div class="container-dropdown algorithm-type">
-         <img src="./svg/arrow.svg" class="dropdown-btn" />
-         <div class="container-selection">
-            <span class="types selected" data-type="bubble">Bubble </span>
-            <span class="types" data-type="selection">Selection </span>
-            <span class="types" data-type="insertion">Insertion </span>
-            <span class="types" data-type="merge">Merge </span>
-            <span class="types" data-type="quick">Quick </span>
+      <!-- Selection -->
+      <div class="container">
+         <div class="dropdown-btn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+               <path d="M7 10l5 5 5-5z" />
+            </svg>
          </div>
-      </div>
-      <div class="container-graph-options">
-         <div class="speed-section">
-            <img src="" alt="" />
-            <div class="speed-container">
-               <span class="speed" data-speed="1">0.5x</span>
+         <div class="container-dropdown">
+            <div class="sectionA">
+               <span class="section-title">Algorithm</span>
+               <span class="types selected" data-type="bubble">Bubble </span>
+               <span class="types " data-type="selection">Selection </span>
+               <span class="types " data-type="insertion">Insertion </span>
+               <span class="types " data-type="merge">Merge </span>
+               <span class="types " data-type="quick">Quick </span>
+            </div>
+            <div class="sectionB">
+               <span class="section-title">Sorting Speed</span>
+               <span class="speed selected" data-speed="1">0.5x</span>
                <span class="speed" data-speed="2">0.75x</span>
                <span class="speed" data-speed="3">1x</span>
                <span class="speed" data-speed="4">1.25x</span>
                <span class="speed" data-speed="5">2.00x</span>
             </div>
          </div>
-         <div class="container-random-points">
-            <input type="number" />
-            <input type="text" />
-         </div>
-      </div>
 
-      
-
-      <!-- Graph Section -->
-      <div class="container">
+         <!-- Graph -->
          <div class="container-graph">
             <div class="graph"></div>
          </div>
+
+         <!-- Details -->
          <div class="container-details">
             <h1 id="details-topic"></h1>
             <p id="details-desc"></p>
             <div class="details-status">
-               <div class="statusB">
-                  <span class="status-topic">Swap Count</span>
+               <div class="statusGA">
+                  <h4 class="status">Swap Count</h4>
                   <span id="swap-count"> </span>
                </div>
-               <div class="statusA">
-                  <span class="status-topic" id="status">Status</span>
+               <div class="statusGB">
+                  <span class="status" id="status-log">Status</span>
                   <span id="status-value"></span>
                </div>
             </div>
             <div class="details-input">
-               <input
-                  type="text"
-                  id="input"
-                  placeholder="Enter range of numbers (comma seperated)"
-               />
-               <button type="button" id="start">Start</button>
-            </div>
+               <div class="group input-custom  active">
+                   <span class="input-label active">Custom Points</span>
+                   <input type="text" id="custom-value" placeholder="e.g., 5, 3, 8, 1, 9, 2" />
+                   <button type="button" id="custom-start">Generate</button>
+               </div>
+               <div class="group input-random">
+                   <span class="input-label">Random Points</span>
+                   <input type="number" id="random-value" placeholder="Enter number of elements " /> 
+                   <button type="button" id="custom-random">Generate</button>
+               </div>
+
+               <div class="input-btn">
+                   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                       <path d="M7 10l5 5 5-5z" />
+                   </svg>
+               </div>
+           </div>
          </div>
       </div>
    </body>
+   <script>
+         const inputBtn = document.querySelector('.input-btn');
+        const customGroup = document.querySelector('.input-custom');
+        const randomGroup = document.querySelector('.input-random');
+        
+        let isCustomActive = true;
+
+        inputBtn.addEventListener('click', () => {
+            // Toggle the active state
+            isCustomActive = !isCustomActive;
+            
+            // Toggle rotation of arrow
+            inputBtn.classList.toggle('rotated');
+            
+            // Toggle visibility of groups
+            if (isCustomActive) {
+                customGroup.classList.add('active');
+                randomGroup.classList.remove('active');
+            } else {
+                customGroup.classList.remove('active');
+                randomGroup.classList.add('active');
+            }
+        });
+   </script>
 </html>

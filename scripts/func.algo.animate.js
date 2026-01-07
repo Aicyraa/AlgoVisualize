@@ -107,7 +107,7 @@ async function sortSwap(idxA, idxB) {
 function sortStatusLog(countSwap, logMessage) {
    // wala pang reset ng swap counter
    // dapat "done" ang lalabag pag tapos ng loop
-   const statusIdentifier = document.querySelector("#status");
+   const statusIdentifier = document.querySelector("#status-log");
    const status = document.querySelector("#status-value");
    const count = document.querySelector("#swap-count");
 

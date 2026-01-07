@@ -8,7 +8,7 @@
    height: 100%;
    border-radius: 1rem;
    /* padding: 8px; */
-   overflow: hidden;
+   /* overflow: hidden; */
 }
 
 .graph {
@@ -41,6 +41,7 @@
 
 #bar {
    background-color: var(--accent);
+   box-shadow: 0 0 2px var(--shadow);
    border-radius: 4px;
    width: 100%;
 }
