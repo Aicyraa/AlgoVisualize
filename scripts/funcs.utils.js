@@ -83,13 +83,21 @@ function filterValues(rawValue) {
 
 function throttle(func, ms) {
    let isWaiting = false;
+   let lastCall;
+   return function (data) {
+   // call once when called
+   // can't call within the given minute
+   // after the given time, call the function with the last argument
+      if (isWaiting) {
+         lastCall = arguments[0];
+         return
+      }
 
-   return function (event) {
-      if (isWaiting) return;
       isWaiting = true;
-      func.call(event, this);
+      func.call(this, data);
+
       setTimeout(() => {
-         func.call(event, this);
+         func.call(this, lastCall);
          isWaiting = false;
       }, ms);
    };
