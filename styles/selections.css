@@ -12,20 +12,21 @@
 /* _________________ */
 
 .container-dropdown {
+   z-index: 1;
    position: absolute;
    top: 1rem;
    left: -3.5rem;
    display: flex;
    justify-content: center;
    align-items: center;
-   gap: 1rem;
+   gap: 8px;
    border-radius: 12px;
    box-shadow: 0 0 3px var(--shadow), 0 0 2px var(--shadow) inset;
-   background-color: var(--light);
+   background-color: white;
    overflow: hidden;
 
    max-height: 0;
-   width: 40%;
+   width: 300px;
    opacity: 0;
    transition: max-height 1000ms ease-out, opacity 400ms ease;
    transition: 500ms ease;
@@ -40,8 +41,6 @@
 .container-dropdown.show {
    opacity: 1;
    max-height: 500px;
-   width: 40%;
-   padding: 0.5rem 8px;
 }
 
 .dropdown-btn.show > svg {
@@ -50,11 +49,19 @@
 
 .sectionA,
 .sectionB {
-   padding: 8px;
-   flex-grow: 1;
+   width: 50%;
+   padding: 12px;
    display: flex;
    flex-direction: column;
    gap: 10px;
+}
+
+.sectionA {
+   padding-right: 0 !important;
+}
+
+.sectionB {
+   padding-left: 0 !important;
 }
 
 .section-title {
@@ -73,6 +80,7 @@
    background-color: hsl(0, 0%, 92%);
    border: 1px solid var(--muted-light);
    border-radius: 1rem;
+   cursor: pointer;
 }
 
 .container-dropdown span:not(:nth-child(1)).selected {
