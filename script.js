@@ -61,16 +61,17 @@ function sortType() {
 }
 
 (function () {
-   const selectionContainer = document.querySelector(".container-selection");
    const dropdownBtn = document.querySelector(".dropdown-btn");
-   const start = document.querySelector("#start");
-   const input = document.querySelector("#input")
+   // const start = document.querySelector("#start");
+   // const input = document.querySelector("#input")
+   
+   // const selectionContainer = document.querySelector(".container-selection");
 
    selectionInfos(graphInfo.type()[0].dataset.type);
-   selectionContainer.addEventListener("click", selectionHandler);
+   // selectionContainer.addEventListener("click", selectionHandler);
    dropdownBtn.addEventListener("click", selectionDropdown);
-   start.addEventListener("click", sortType);
-   input.addEventListener("input", throttle(generateBar, 2000));
+   // start.addEventListener("click", sortType);
+   // input.addEventListener("input", throttle(generateBar, 2000));
 })();
 
 // console.log(insertion([2,5,2,3,7,1]));

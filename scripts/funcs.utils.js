@@ -1,4 +1,11 @@
+function selectionDropdown() {
+   // dropdown
+   document.querySelector(".container-dropdown").classList.toggle("show");
+   document.querySelector(".dropdown-btn").classList.toggle("show");
+}
+
 function selectionHandler(event) {
+   // for selecting .types
    const types = document.querySelectorAll(".types");
    const current = event.target;
 
@@ -13,12 +20,9 @@ function selectionHandler(event) {
    }
 }
 
-function selectionDropdown() {
-   document.querySelector(".container-selection").classList.toggle("show");
-   document.querySelector(".dropdown-btn").classList.toggle("show");
-}
 
 function selectionInfos(topicChoice) {
+   // for rendering desctiption
    const infos = {
       bubble: {
          topic: "Bubble Sort",
