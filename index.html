@@ -44,18 +44,18 @@
             <div class="sectionA">
                <span class="section-title">Algorithm</span>
                <span class="types selected" data-type="bubble">Bubble </span>
-               <span class="types " data-type="selection">Selection </span>
-               <span class="types " data-type="insertion">Insertion </span>
-               <span class="types " data-type="merge">Merge </span>
-               <span class="types " data-type="quick">Quick </span>
+               <span class="types" data-type="selection">Selection </span>
+               <span class="types" data-type="insertion">Insertion </span>
+               <span class="types" data-type="merge">Merge </span>
+               <span class="types" data-type="quick">Quick </span>
             </div>
             <div class="sectionB">
                <span class="section-title">Sorting Speed</span>
-               <span class="speed selected" data-speed="1">0.5x</span>
-               <span class="speed" data-speed="2">0.75x</span>
-               <span class="speed" data-speed="3">1x</span>
-               <span class="speed" data-speed="4">1.25x</span>
-               <span class="speed" data-speed="5">2.00x</span>
+               <span class="speeds selected" data-speed="1">0.5x</span>
+               <span class="speeds" data-speed="2">0.75x</span>
+               <span class="speeds" data-speed="3">1x</span>
+               <span class="speeds" data-speed="4">1.25x</span>
+               <span class="speeds" data-speed="5">2.00x</span>
             </div>
          </div>
 
@@ -79,7 +79,7 @@
                </div>
             </div>
             <div class="details-input">
-               <div class="group input-custom  active">
+               <div class="group input-custom selected">
                    <span class="input-label active">Custom Points</span>
                    <input type="text" id="custom-value" placeholder="e.g., 5, 3, 8, 1, 9, 2" />
                    <button type="button" id="custom-start">Generate</button>
@@ -99,28 +99,4 @@
          </div>
       </div>
    </body>
-   <script>
-         const inputBtn = document.querySelector('.input-btn');
-        const customGroup = document.querySelector('.input-custom');
-        const randomGroup = document.querySelector('.input-random');
-        
-        let isCustomActive = true;
-
-        inputBtn.addEventListener('click', () => {
-            // Toggle the active state
-            isCustomActive = !isCustomActive;
-            
-            // Toggle rotation of arrow
-            inputBtn.classList.toggle('rotated');
-            
-            // Toggle visibility of groups
-            if (isCustomActive) {
-                customGroup.classList.add('active');
-                randomGroup.classList.remove('active');
-            } else {
-                customGroup.classList.remove('active');
-                randomGroup.classList.add('active');
-            }
-        });
-   </script>
 </html>

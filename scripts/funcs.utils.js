@@ -8,8 +8,8 @@ function selectionHandler(event) {
    const types = document.querySelectorAll(".types");
    const speeds = document.querySelectorAll(".speeds");
    const current = event.target;
-   
-      if (current.className !== "types" && current.className !== "speeds") return
+
+   if (current.className !== "types" && current.className !== "speeds") return;
 
    function removeSelectedTypes() {
       types.forEach((element) => {
@@ -58,17 +58,19 @@ function selectionInfos(topicChoice) {
       },
    };
 
-   const speed = {
-      1: "0.5x",
-      2: "0.75x",
-      3: "1.00x",
-      4: "1.25x",
-      5: "2.00x",
-   };
-
    document.querySelector(".graph").innerHTML = "";
    document.querySelector("#details-topic").textContent = infos[`${topicChoice}`].topic;
    document.querySelector("#details-desc").textContent = infos[`${topicChoice}`].desc;
+}
+
+function selectionInput() {
+   document.querySelectorAll(".group").forEach((group) => {
+      if (group.classList.contains("selected")) {
+         group.classList.remove("selected");
+         return;
+      }
+      group.classList.add("selected");
+   });
 }
 
 function filterValues(rawValue) {
@@ -111,6 +113,7 @@ export {
    selectionHandler,
    selectionDropdown,
    selectionInfos,
+   selectionInput,
    filterValues,
    throttle,
    debounce,
