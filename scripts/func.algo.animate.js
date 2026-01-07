@@ -1,6 +1,5 @@
-// comparing, swapping
-var sortSpeed = 300;
-var sortSwapTime = 50;
+import { graphInfo } from "../script.js";
+
 var swapCount = 1;
 
 function sortCompare(sorted = [], idxA, idxB, idxSpecial) {
@@ -35,15 +34,19 @@ function sortCompare(sorted = [], idxA, idxB, idxSpecial) {
    }
 
    styleAdd();
-   setTimeout(styleCurrentRemove, sortSpeed);
-   setTimeout(styleSpecialRemove, sortSpeed * 4);
+   setTimeout(styleCurrentRemove, graphInfo.sortSpeed);
+   setTimeout(styleSpecialRemove, graphInfo.sortSpeed * 4);
 }
 
 async function sortSwap(idxA, idxB) {
+
+
    if (idxA > idxB) [idxA, idxB] = [idxB, idxA];
    if (idxA == idxB) return;
 
    const grapgContainer = document.querySelector(".graph");
+   const sortSwapTime = 50;
+
 
    function getOrder() {
       // Force fresh DOM query
@@ -87,7 +90,6 @@ async function sortSwap(idxA, idxB) {
             elmt.style.transform = `translateX(0px)`;
          });
       }, sortSwapTime);
-      4, 2, 19, 3, 12, 14, 1, 3, 4, 2;
 
       setTimeout(() => {
          [elmtA, elmtB].forEach((elmt) => {
@@ -126,4 +128,4 @@ function sortStatusLog(countSwap, logMessage) {
    }
 }
 
-export { sortCompare, sortSwap, sortStatusLog, sortSpeed, sortSwapTime };
+export { sortCompare, sortSwap, sortStatusLog, graphInfo};
