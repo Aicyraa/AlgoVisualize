@@ -6,21 +6,15 @@ import { graphInfo } from "../script.js";
 async function bubble(arr) {
    let sorted = [];
    const n = arr.length;
-
+   
    for (let i = 0; i < n; i++) {
       for (let j = 0; j < n - i - 1; j++) {
-         sortStatusLog(false, {
-            status: "Comparing",
-            value: `is ${arr[j]} bigger than ${arr[j + 1]}?`,
-         });
+         sortStatusLog(false, {status: "Comparing",value: `is ${arr[j]} bigger than ${arr[j + 1]}?`, });
          sortCompare([], j, j + 1);
          await sleep(graphInfo.sortSpeed);
 
          if (arr[j] > arr[j + 1]) {
-            sortStatusLog("swap", {
-               status: "Swapping",
-               value: `Moving ${arr[j]} to the right.`,
-            });
+            sortStatusLog("swap", {status: "Swapping",value: `Moving ${arr[j]} to the right.`,});
             await sortSwap(j, j + 1);
             await sleep(graphInfo.sortSpeed);
 
@@ -46,10 +40,7 @@ async function selection(arr) {
       const last = n - i - 1;
       let bigIdx = 0;
       for (let j = 0; j < n - i; j++) {
-         sortStatusLog(false, {
-            status: "Comparing",
-            value: `Is ${arr[j]} bigger than or equal to ${arr[bigIdx]}?`,
-         });
+         sortStatusLog(false, {status: "Comparing", value: `Is ${arr[j]} bigger than or equal to ${arr[bigIdx]}?`,});
          sortCompare([], j, undefined, bigIdx);
          await sleep(graphInfo.sortSpeed);
 
@@ -58,10 +49,7 @@ async function selection(arr) {
          }
       }
 
-      sortStatusLog("swap", {
-         status: "Swapping",
-         value: `Switching ${arr[bigIdx]} to the array's last element of the array`,
-      });
+      sortStatusLog("swap", {status: "Swapping", value: `Switching ${arr[bigIdx]} to the array's last element of the array`,});
       await sortSwap(bigIdx, last);
       [arr[bigIdx], arr[last]] = [arr[last], arr[bigIdx]];
 
@@ -79,10 +67,7 @@ async function insertion(arr) {
       let j = i;
 
       while (j > 0 && arr[j] < arr[j - 1]) {
-         sortStatusLog(false, {
-            status: "Comparing",
-            value: `Is ${arr[j]} less than ${arr[j - 1]}?`,
-         });
+         sortStatusLog(false, {status: "Comparing", value: `Is ${arr[j]} less than ${arr[j - 1]}?`, });
          sortCompare([], undefined, j - 1, j);
          await sleep(graphInfo.sortSpeed);
 
