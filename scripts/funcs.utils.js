@@ -83,25 +83,30 @@ function filterValues(rawValue) {
 
 function throttle(func, ms) {
    let isWaiting = false;
-   let lastCall;
-   return function (data) {
-   // call once when called
-   // can't call within the given minute
-   // after the given time, call the function with the last argument
-      if (isWaiting) {
-         lastCall = arguments[0];
-         return
-      }
-
-      isWaiting = true;
-      func.call(this, data);
-
-      setTimeout(() => {
-         func.call(this, lastCall);
-         isWaiting = false;
-      }, ms);
+   let lastCall = null;
+   
+   return function (...args) {
+      console.log("Throttle: " + args);
+      
+     if (isWaiting) {
+       lastCall = args; // Save the arguments for later
+       return;
+     }
+     
+     isWaiting = true;
+     func(...args); // Execute immediately
+     
+     setTimeout(() => {
+       isWaiting = false;
+       
+       // Only execute if there was a call during the waiting period
+       if (lastCall !== null) {
+         func(...lastCall);
+         lastCall = null; // Reset after using
+       }
+     }, ms);
    };
-}
+ }
 
 function debounce(func, ms) {
    let reference;
