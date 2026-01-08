@@ -40,13 +40,16 @@
 
 /* Details */
 .container-details {
+   background-color: var(--light);
+   border-radius: 1rem;
+   box-shadow: 0 0 5px var(--shadow);
    flex-shrink: 2;
    display: flex;
    flex-direction: column;
    gap: 10px;
    height: 100%;
    width: 350px;
-   padding: 6px 8px;
+   padding: 14px;
    text-align: justify;
    transition: 500ms ease;
 }
@@ -72,122 +75,121 @@
    border-radius: 4px;
 }
 
-/* Inputs */
 /* Inputs Container */
 .details-input {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 0;
-    min-height: 140px;
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+   padding: 0;
+   min-height: 140px;
 }
 
 /* Input Groups */
 .group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   opacity: 0;
+   pointer-events: none;
+   transition: opacity 0.3s ease;
 }
 
 .group.selected {
-    opacity: 1;
-    pointer-events: auto;
+   opacity: 1;
+   pointer-events: auto;
 }
 
 .group input {
-    padding: 12px;
-    width: 100%;
-    border-radius: 6px;
-    border: 2px solid var(--muted-light);
-    font-size: 0.95rem;
-    transition: border-color 0.2s ease;
+   padding: 12px;
+   width: 100%;
+   border-radius: 6px;
+   border: 2px solid var(--muted-light);
+   font-size: 0.95rem;
+   transition: border-color 0.2s ease;
 }
 
 .group input:focus {
-    outline: none;
-    border-color: var(--accent);
+   outline: none;
+   border-color: var(--accent);
 }
 
 .group input::placeholder {
-    color: var(--muted-text);
-    font-size: 0.85rem;
+   color: var(--muted-text);
+   font-size: 0.85rem;
 }
 
 .group button {
-    padding: 12px;
-    width: 100%;
-    border-radius: 6px;
-    border: none;
-    background-color: var(--accent);
-    color: var(--text-light);
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   padding: 12px;
+   width: 100%;
+   border-radius: 6px;
+   border: none;
+   background-color: var(--accent);
+   color: var(--text-light);
+   font-weight: 700;
+   font-size: 1rem;
+   letter-spacing: 2px;
+   text-transform: uppercase;
+   cursor: pointer;
+   transition: background-color 0.2s ease, transform 0.1s ease;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .group button:hover {
-    background-color: hsl(344, 70%, 48%);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+   background-color: hsl(344, 70%, 48%);
+   transform: translateY(-1px);
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .group button:active {
-    transform: translateY(0);
+   transform: translateY(0);
 }
 
 /* Toggle Button */
 .input-btn {
-    position: absolute;
-    top: -10px;
-    right: 0px;
-    width: 32px;
-    height: 32px;
-    background-color: var(--accent);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 10;
+   position: absolute;
+   top: -10px;
+   right: 0px;
+   width: 32px;
+   height: 32px;
+   background-color: var(--accent);
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   transition: background-color 0.2s ease, transform 0.3s ease;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+   z-index: 10;
 }
 
 .input-btn:hover {
-    background-color: hsl(344, 70%, 48%);
+   background-color: hsl(344, 70%, 48%);
 }
 
 .input-btn svg {
-    width: 20px;
-    height: 20px;
-    fill: white;
-    transition: transform 0.3s ease;
+   width: 20px;
+   height: 20px;
+   fill: white;
+   transition: transform 0.3s ease;
 }
 
 .input-btn.rotated svg {
-    transform: rotate(180deg);
+   transform: rotate(180deg);
 }
 
 /* Label for input types */
 .input-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--muted-text);
-    margin-bottom: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+   font-size: 0.85rem;
+   font-weight: 600;
+   color: var(--muted-text);
+   margin-bottom: 4px;
+   text-transform: uppercase;
+   letter-spacing: 0.5px;
 }
 
 .current {
