@@ -2,6 +2,7 @@
 
 > Visualize Different  Algorithm (only basic  ones)
 
-> Utilizes svg manipulation
+## credits:
+* favicon - flaticon
 
-## For learning purposes
+
