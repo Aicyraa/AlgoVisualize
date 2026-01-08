@@ -22,9 +22,7 @@ const graphInfo = {
    },
 
    getPoints: function () {
-      return Array.from(this.graph.children).map(
-         (point) => point.querySelector("#text").textContent
-      );
+      return Array.from(this.graph.children).map((point) => parseInt(point.querySelector("#text").textContent));
    },
 };
 
@@ -48,15 +46,15 @@ function generateBar(values) {
 function dataCustom(generate) {
    return function (event) {
       const input = event.currentTarget;
-      const value = filterValues(input.value);
-      generate(value);
+      const points = filterValues(input.value);
+      generate(points);
    };
 }
 
 function dataRandom(generate) {
    return function (event) {
       const input = event.currentTarget;
-      let points = [];
+      const points = [];
       for (let i = 0; i < input.value; i++) {
          points.push(Math.floor(Math.random() * 20));
       }
@@ -70,7 +68,7 @@ function sortPoints() {
    const speed = graphInfo.speed();
    
    graphInfo.sortSpeed = 500 * speed.dataset.speed
-
+   
    switch (algorithm[0].dataset.type) {
       case "bubble":
          bubble(values);
@@ -89,6 +87,8 @@ function sortPoints() {
 }
 
 (function () {
+   // 1. input
+   // 2. algoritms
    selectionInfos(graphInfo.type()[0].dataset.type);
    generateBar = throttle(generateBar, 2000);
 
