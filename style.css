@@ -19,8 +19,12 @@
    --primary: #3b82f6;
    --hover: #f3f4f6;
    --selected: #dbeafe;
-   
-   --gradient-bg: linear-gradient(135deg, hsl(220, 20%, 96%) 0%, hsl(220, 15%, 94%) 100%);
+
+   --gradient-bg: linear-gradient(
+      135deg,
+      hsl(220, 20%, 96%) 0%,
+      hsl(220, 15%, 94%) 100%
+   );
 }
 
 /* Global Styles */
@@ -58,8 +62,7 @@ body {
 /* Graph Container */
 .container-graph {
    background: var(--light);
-   box-shadow: 0 4px 20px var(--shadow), 
-               0 1px 3px var(--shadow-strong);
+   box-shadow: 0 4px 20px var(--shadow), 0 1px 3px var(--shadow-strong);
    flex: 1 2 auto;
    display: flex;
    flex-direction: column;
@@ -114,7 +117,11 @@ body {
 }
 
 #bar {
-   background: linear-gradient(135deg, var(--accent) 0%, hsl(338, 85%, 48%) 100%);
+   background: linear-gradient(
+      135deg,
+      var(--accent) 0%,
+      hsl(338, 85%, 48%) 100%
+   );
    box-shadow: 0 2px 8px hsla(338, 85%, 58%, 0.3);
    border-radius: 6px;
    width: 100%;
@@ -137,36 +144,24 @@ body {
 .container-details {
    background: var(--light);
    border-radius: 1.25rem;
-   box-shadow: 0 4px 20px var(--shadow),
-               0 1px 3px var(--shadow-strong);
+   box-shadow: 0 4px 20px var(--shadow), 0 1px 3px var(--shadow-strong);
    border: 1px solid hsla(220, 15%, 90%, 0.8);
    flex-shrink: 2;
    display: flex;
    flex-direction: column;
-   gap: 16px;
+   gap: 8px;
    height: 100%;
-   width: 380px;
+   min-width: 420px;
+   width: 420px;
    padding: 24px;
    text-align: justify;
    overflow-y: auto;
-}
-
-.container-details::-webkit-scrollbar {
-   width: 8px;
-}
-
-.container-details::-webkit-scrollbar-track {
-   background: var(--muted-light);
-   border-radius: 4px;
-}
-
-.container-details::-webkit-scrollbar-thumb {
-   background: var(--accent);
-   border-radius: 4px;
+   scrollbar-width: none;
+   transition: 400ms ease;
 }
 
 .container-details h1 {
-   font-size: 1.75rem;
+   font-size: 1.4rem;
    color: var(--text);
    font-weight: 700;
    letter-spacing: -0.5px;
@@ -174,8 +169,8 @@ body {
 
 .container-details > p {
    flex-grow: 1;
-   font-size: 0.9rem;
-   line-height: 1.6;
+   font-size: 0.8rem;
+   line-height: 1.2;
    color: var(--muted-text);
 }
 
@@ -194,7 +189,11 @@ body {
 }
 
 .details-status .status {
-   background: linear-gradient(135deg, var(--accent) 0%, hsl(338, 85%, 52%) 100%);
+   background: linear-gradient(
+      135deg,
+      var(--accent) 0%,
+      hsl(338, 85%, 52%) 100%
+   );
    color: var(--text-light);
    padding: 6px 12px;
    font-weight: 700;
@@ -278,7 +277,11 @@ body {
    width: 100%;
    border-radius: 10px;
    border: none;
-   background: linear-gradient(135deg, var(--accent) 0%, hsl(338, 85%, 52%) 100%);
+   background: linear-gradient(
+      135deg,
+      var(--accent) 0%,
+      hsl(338, 85%, 52%) 100%
+   );
    color: var(--text-light);
    font-weight: 700;
    font-size: 1rem;
@@ -306,7 +309,11 @@ body {
    right: 0;
    width: 36px;
    height: 36px;
-   background: linear-gradient(135deg, var(--accent) 0%, hsl(338, 85%, 52%) 100%);
+   background: linear-gradient(
+      135deg,
+      var(--accent) 0%,
+      hsl(338, 85%, 52%) 100%
+   );
    border-radius: 50%;
    display: flex;
    align-items: center;
@@ -334,15 +341,8 @@ body {
 }
 
 /* Dropdown Styles */
-.dropdown-btn {
-   position: absolute;
-   top: -2rem;
-   left: -3.5rem;
-   cursor: pointer;
-   z-index: 2;
-}
 
-.dropdown-btn > svg {
+.dropdown {
    width: 36px;
    height: 36px;
    fill: var(--text);
@@ -351,15 +351,28 @@ body {
    background: var(--light);
    box-shadow: 0 4px 12px var(--shadow);
    border: 1px solid hsla(220, 15%, 90%, 0.8);
+   position: absolute;
    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.dropdown-btn:hover > svg {
+.dropdown-btn-1:hover {
    transform: scale(1.05);
    box-shadow: 0 6px 16px var(--shadow-strong);
 }
+/* dropdown 1 */
 
-.dropdown-btn.show > svg {
+.dropdown-btn-1 {
+   top: -2rem;
+   left: -3.5rem;
+   cursor: pointer;
+   z-index: 2;
+}
+
+.dropdown-btn-1 > svg {
+   transition: 200ms ease;
+}
+
+.dropdown-btn-1.show > svg {
    transform: rotate(180deg);
 }
 
@@ -432,43 +445,108 @@ body {
 
 .container-dropdown span:not(:nth-child(1)).selected {
    color: var(--text-light);
-   background: linear-gradient(135deg, var(--accent) 0%, hsl(338, 85%, 52%) 100%);
+   background: linear-gradient(
+      135deg,
+      var(--accent) 0%,
+      hsl(338, 85%, 52%) 100%
+   );
    border: 2px solid var(--accent);
    box-shadow: 0 4px 12px hsla(338, 85%, 58%, 0.3);
    transform: translateX(2px);
 }
 
+/* dropdown 2 */
+.dropdown-btn-2 {
+   display: none;
+}
+
 /* State Classes */
 .current {
-   background: linear-gradient(135deg, var(--current) 0%, hsl(12, 90%, 55%) 100%) !important;
+   background: linear-gradient(
+      135deg,
+      var(--current) 0%,
+      hsl(12, 90%, 55%) 100%
+   ) !important;
    box-shadow: 0 2px 8px hsla(12, 90%, 65%, 0.4) !important;
 }
 
 .correct-value {
-   background: linear-gradient(135deg, var(--correct) 0%, hsl(142, 70%, 48%) 100%) !important;
+   background: linear-gradient(
+      135deg,
+      var(--correct) 0%,
+      hsl(142, 70%, 48%) 100%
+   ) !important;
    box-shadow: 0 2px 8px hsla(142, 70%, 58%, 0.4) !important;
 }
 
 .sorted {
-   background: linear-gradient(135deg, var(--sorted) 0%, hsl(215, 85%, 52%) 100%) !important;
+   background: linear-gradient(
+      135deg,
+      var(--sorted) 0%,
+      hsl(215, 85%, 52%) 100%
+   ) !important;
    box-shadow: 0 2px 8px hsla(215, 85%, 62%, 0.4) !important;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-   .container {
+   /* .container {
       flex-direction: column;
-      height: auto;
+      height: fit-content;
       gap: 1rem;
-   }
+   } */
 
    .container-details {
-      width: 100%;
-      max-height: 400px;
+      width: 70%;
+      /* min-height: 250px; */
+      /* max-height: 300px; */
+      gap: 1rem !important;
+      position: absolute;
+      opacity: 0;
+      transition: 300ms ease-in;
+   }
+
+   .container-details > h1 {
+      font-size: 1.2rem;
+   }
+   .container-details > p {
+      font-size: 12px;
+   }
+
+   .details-status {
+      display: none;
+   }
+
+   .dropdown-btn-2 {
+      display: block;
+      bottom: -2.5rem;
+      transition: 500ms ease-in-out;
+      z-index: 10;
+   }
+
+   .container-details.show {
+      display: block;
+      opacity: 1;
+   }
+
+   .dropdown-btn-2.show {
+      transform: translateY(calc(-400px + -50px));
    }
 
    .container-graph {
       width: 100%;
-      min-height: 300px;
+      min-height: 200px;
+      height: 60vh;
+   }
+
+   /* Dropdown */
+
+   .dropdown-btn-1 {
+      left: 20px;
+   }
+
+   .container-dropdown {
+      top: 1.3rem;
+      left: 20px;
    }
 }
