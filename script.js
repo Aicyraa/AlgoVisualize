@@ -1,7 +1,8 @@
 import { bubble, selection, insertion } from "./scripts/funcs.algo.js";
 import {
+   dropdownHanlderSelect,
+   dropdownHanlderDetail,
    selectionHandler,
-   selectionDropdown,
    selectionInfos,
    selectionInput,
    filterValues,
@@ -92,14 +93,18 @@ function sortPoints() {
    selectionInfos(graphInfo.type()[0].dataset.type);
    generateBar = throttle(generateBar, 2000);
 
-   const dropdownBtn = document.querySelector(".dropdown-btn");
+   const dropdownBtn1 = document.querySelector(".dropdown-btn-1");
+   const dropdownBtn2 = document.querySelector(".dropdown-btn-2");
+   
    const dropdownContainer = document.querySelector(".container-dropdown");
    const inputToggle = document.querySelector(".input-btn");
    const inputCustom = document.querySelector("#custom-value");
    const inputRandom = document.querySelector("#random-value");
    const sortBtn = document.querySelectorAll(".button");
+   
 
-   dropdownBtn.addEventListener("click", selectionDropdown);
+   dropdownBtn1.addEventListener("click", dropdownHanlderSelect);
+   dropdownBtn2.addEventListener("click", dropdownHanlderDetail);
    dropdownContainer.addEventListener("click", selectionHandler);
    inputToggle.addEventListener("click", selectionInput);
    inputCustom.addEventListener("input", dataCustom(generateBar));
