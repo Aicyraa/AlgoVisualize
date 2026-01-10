@@ -1,8 +1,22 @@
-function selectionDropdown() {
+function dropdownHanlderSelect() {
    // dropdown
+   if (document.querySelector(".container-details").classList.contains("show")){
+      dropdownHanlderDetail()
+   }
+
    document.querySelector(".container-dropdown").classList.toggle("show");
-   document.querySelector(".dropdown-btn").classList.toggle("show");
+   document.querySelector(".dropdown-btn-1").classList.toggle("show");
 }
+
+function dropdownHanlderDetail(){
+   // dropdown
+   if (document.querySelector(".container-dropdown").classList.contains("show")){
+      dropdownHanlderSelect()
+   }
+
+   document.querySelector(".container-details").classList.toggle("show")   
+   document.querySelector(".dropdown-btn-2").classList.toggle("show")   
+} 
 
 function selectionHandler(event) {
    const types = document.querySelectorAll(".types");
@@ -73,6 +87,7 @@ function selectionInput() {
    });
 }
 
+
 function filterValues(rawValue) {
    const pattern = /^[0-9]+$/;
    const values = rawValue.split(",");
@@ -123,8 +138,9 @@ function sleep(ms) {
 }
 
 export {
+   dropdownHanlderSelect,
+   dropdownHanlderDetail,
    selectionHandler,
-   selectionDropdown,
    selectionInfos,
    selectionInput,
    filterValues,
