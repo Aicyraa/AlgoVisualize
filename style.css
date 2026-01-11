@@ -181,7 +181,7 @@ body {
 .details-status {
    display: flex;
    flex-direction: column;
-   gap: 0.75rem;
+   gap: 0.5rem;
 }
 
 .statusGA,
@@ -200,9 +200,9 @@ body {
       hsl(338, 85%, 52%) 100%
    );
    color: var(--text-light);
-   padding: 6px 12px;
+   padding: 4px 8px;
    font-weight: 700;
-   font-size: 0.75rem;
+   font-size: 0.65rem;
    border-radius: 6px;
    text-transform: uppercase;
    letter-spacing: 0.5px;
@@ -504,9 +504,9 @@ body {
    .container {
       flex-direction: column;
       height: auto;
-      max-height: 100vh;
+      max-height: 70vh;
       gap: 0;
-      padding: 0.75rem;
+      padding: 8px ;
       padding-top: 4rem;
    }
 
@@ -524,9 +524,6 @@ body {
    }
 
    /* Move status from details to graph container */
-   .container-details .details-status {
-      display: none !important;
-   }
 
    /* Create floating status above graph */
    .container-graph::before {
@@ -540,24 +537,6 @@ body {
    }
 
    /* Floating Status - needs to be moved via JS */
-   .details-status {
-      display: flex !important;
-      position: fixed;
-      top: calc(4rem + 0.75rem);
-      left: 1.5rem;
-      right: 1.5rem;
-      z-index: 10;
-      flex-direction: row;
-      gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 10px 12px;
-      border-radius: 10px;
-      box-shadow: 0 4px 16px var(--shadow-strong);
-      border: 1px solid hsla(220, 15%, 90%, 0.8);
-      max-width: calc(100vw - 3rem);
-   }
-
    .statusGA,
    .statusGB {
       flex-direction: column;
@@ -613,9 +592,7 @@ body {
    }
 
    /* Hide status in details panel on mobile */
-   .container-details .details-status {
-      display: none;
-   }
+
 
    /* Mobile Input Adjustments */
    .group input {
@@ -634,7 +611,7 @@ body {
    }
 
    .input-label {
-      font-size: 0.7rem;
+      font-size: 0.8rem;
    }
 
    /* Dropdown Button 2 - Toggle Details Panel */
