@@ -26,13 +26,14 @@ const graphInfo = {
       return Array.from(this.graph.children).map((point) => parseInt(point.querySelector("#text").textContent));
    },
 };
-
 function generateBar(values) {
    graphInfo.graph.innerHTML = "";
-
+   
+   const maxBarHeight = (window.innerHeight * 0.4); // Use 40% of viewport height as max
+   
    values.forEach((point, index) => {
       const points = document.createElement("div");
-      const height = 5 * point ? 5 * point : 0.8;
+      const height = point === 0 ? 0.8 : (point / Math.max(...values)) * (maxBarHeight - 20) + 10;
       points.className = "points";
       points.dataset.index = index;
       points.innerHTML = `
@@ -43,7 +44,6 @@ function generateBar(values) {
       graphInfo.graph.append(points);
    });
 }
-
 function dataCustom(generate) {
    return function (event) {
       const input = event.currentTarget;
