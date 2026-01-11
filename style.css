@@ -56,6 +56,7 @@ body {
    gap: 1.5rem;
    height: 500px;
    width: max(200px, 85vw);
+   min-width: 320px;
    padding: 1rem;
 }
 
@@ -68,9 +69,11 @@ body {
    flex-direction: column;
    justify-content: center;
    height: 100%;
+   min-width: 280px;
    border-radius: 1.25rem;
    overflow: hidden;
    border: 1px solid hsla(220, 15%, 90%, 0.8);
+   position: relative;
 }
 
 .graph {
@@ -174,7 +177,7 @@ body {
    color: var(--muted-text);
 }
 
-/* Status Section */
+/* Status Section - Improved Structure */
 .details-status {
    display: flex;
    flex-direction: column;
@@ -185,7 +188,9 @@ body {
 .statusGB {
    display: flex;
    align-items: center;
+   justify-content: space-between;
    gap: 0.75rem;
+   width: 100%;
 }
 
 .details-status .status {
@@ -202,6 +207,8 @@ body {
    text-transform: uppercase;
    letter-spacing: 0.5px;
    box-shadow: 0 2px 8px hsla(338, 85%, 58%, 0.25);
+   white-space: nowrap;
+   flex-shrink: 0;
 }
 
 #swap-count,
@@ -209,6 +216,9 @@ body {
    font-weight: 600;
    color: var(--text);
    font-size: 0.95rem;
+   flex: 1;
+   text-align: right;
+   min-width: 0;
 }
 
 /* Input Container */
@@ -392,6 +402,7 @@ body {
    overflow: hidden;
    max-height: 0;
    width: 340px;
+   /* min-width: 250px; */
    opacity: 0;
    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -490,63 +501,221 @@ body {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-   /* .container {
+   .container {
       flex-direction: column;
-      height: fit-content;
-      gap: 1rem;
-   } */
-
-   .container-details {
-      width: 70%;
-      /* min-height: 250px; */
-      /* max-height: 300px; */
-      gap: 1rem !important;
-      position: absolute;
-      opacity: 0;
-      transition: 300ms ease-in;
-   }
-
-   .container-details > h1 {
-      font-size: 1.2rem;
-   }
-   .container-details > p {
-      font-size: 12px;
-   }
-
-   .details-status {
-      display: none;
-   }
-
-   .dropdown-btn-2 {
-      display: block;
-      bottom: -2.5rem;
-      transition: 500ms ease-in-out;
-      z-index: 10;
-   }
-
-   .container-details.show {
-      display: block;
-      opacity: 1;
-   }
-
-   .dropdown-btn-2.show {
-      transform: translateY(calc(-400px + -50px));
+      height: auto;
+      max-height: 100vh;
+      gap: 0;
+      padding: 0.75rem;
+      padding-top: 4rem;
    }
 
    .container-graph {
       width: 100%;
-      min-height: 200px;
-      height: 60vh;
+      min-height: 300px;
+      max-height: calc(100vh - 2.5rem);
+      height: auto;
+      flex: 1;
+      position: relative;
+   }
+   
+   .graph {
+      padding: 4.5rem 1rem 1rem 1rem;
    }
 
-   /* Dropdown */
+   /* Floating Status */
+   .details-status {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 1rem;
+      z-index: 50;
+      flex-direction: row;
+      gap: 0.5rem;
+      background: var(--light);
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px var(--shadow);
+      border: 1px solid hsla(220, 15%, 90%, 0.8);
+   }
 
+   .statusGA,
+   .statusGB {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      flex: 1;
+   }
+
+   .details-status .status {
+      font-size: 0.65rem;
+      padding: 4px 8px;
+   }
+
+   #swap-count,
+   #status-value {
+      font-size: 0.85rem;
+      text-align: left;
+   }
+
+   /* Container Details - Slide in from Right */
+   .container-details {
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 85%;
+      max-width: 400px;
+      min-width: 280px;
+      height: 100vh;
+      transform: translateX(100%);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 1.25rem 0 0 1.25rem;
+      z-index: 98;
+      gap: 1rem;
+      padding: 20px;
+   }
+
+   .container-details.show {
+      transform: translateX(0);
+      opacity: 1;
+   }
+
+   .container-details > h1 {
+      font-size: 1.3rem;
+      margin-top: 1rem;
+   }
+
+   .container-details > p {
+      font-size: 0.75rem;
+      line-height: 1.4;
+   }
+
+   /* Hide status in details panel on mobile */
+   .container-details .details-status {
+      /* display: none; */
+   }
+
+   /* Mobile Input Adjustments */
+   .group input {
+      padding: 12px 14px;
+      font-size: 0.9rem;
+   }
+
+   .group input::placeholder {
+      font-size: 0.75rem;
+   }
+
+   .group button {
+      padding: 12px;
+      font-size: 0.9rem;
+      letter-spacing: 1.5px;
+   }
+
+   .input-label {
+      font-size: 0.7rem;
+   }
+
+   /* Dropdown Button 2 - Toggle Details Panel */
+   .dropdown-btn-2 {
+      display: flex;
+      position: fixed;
+      bottom: 1rem;
+      right: 1.5rem;
+      cursor: pointer;
+      z-index: 99;
+      transform: rotate(-90deg);
+   }
+
+   .dropdown-btn-2:hover {
+      transform: rotate(-90deg) scale(1.05);
+      box-shadow: 0 6px 16px var(--shadow-strong);
+   }
+
+   .dropdown-btn-2.show {
+      right: min(60%, 600px);
+      max-width: calc(400px - 1.5rem);
+   }
+
+   .dropdown-btn-2.show > svg {
+      transform: rotate(180deg);
+   }
+
+   /* Dropdown Adjustments */
    .dropdown-btn-1 {
-      left: 20px;
+      left: 1rem;
+      top: -2.5rem;
    }
 
    .container-dropdown {
       top: 1.3rem;
-      left: 20px;
+      left: 1rem;
+      width: 90vw;
+      max-width: 360px;
+   }
+
+   .sectionA,
+   .sectionB {
+      padding: 16px 12px;
+   }
+
+   .container-dropdown span:not(:nth-child(1)) {
+      font-size: 0.85rem;
+      padding: 8px 12px;
+   }
+
+   .section-title {
+      font-size: 0.7rem;
+   }
+}
+
+@media (max-width: 480px) {
+   .container {
+      min-width: 280px;
+   }
+
+   .container-dropdown {
+      width: 80%;
+   }
+
+   .container-details {
+      width: 80%;
+   }
+
+   .dropdown-btn-2.show {
+      right: calc(90% - 1rem);
+   }
+
+   .sectionA span:not([class=section-title]), .sectionB span:not([class=section-title]) {
+      font-size: 0.7rem !important;
+   }
+
+   .graph {
+      padding: 1rem;
+   }
+
+   .points {
+      min-width: 35px;
+      gap: 6px;
+   }
+
+   #details-topic {
+      font-size: 2.5rem;
+   }
+
+   #text {
+      font-size: 0.9rem;
+      line-height: 2.9 !important;
+   }
+
+   .sectionA,
+   .sectionB {
+      width: 100%;
+      border-right: none;
+   }
+
+   .sectionA {
+      border-bottom: 1px solid var(--muted-light);
    }
 }
