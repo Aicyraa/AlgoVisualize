@@ -402,7 +402,7 @@ body {
    overflow: hidden;
    max-height: 0;
    width: 340px;
-   /* min-width: 250px; */
+   min-width: 280px;
    opacity: 0;
    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -512,39 +512,59 @@ body {
 
    .container-graph {
       width: 100%;
-      min-height: 300px;
-      max-height: calc(100vh - 2.5rem);
+      min-height: 250px;
+      max-height: calc(100vh - 5rem);
       height: auto;
       flex: 1;
       position: relative;
    }
-   
+
    .graph {
       padding: 4.5rem 1rem 1rem 1rem;
    }
 
-   /* Floating Status */
-   .details-status {
+   /* Move status from details to graph container */
+   .container-details .details-status {
+      display: none !important;
+   }
+
+   /* Create floating status above graph */
+   .container-graph::before {
+      content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 1rem;
-      z-index: 50;
+      top: 0.75rem;
+      left: 0.75rem;
+      right: 0.75rem;
+      height: auto;
+      z-index: 10;
+   }
+
+   /* Floating Status - needs to be moved via JS */
+   .details-status {
+      display: flex !important;
+      position: fixed;
+      top: calc(4rem + 0.75rem);
+      left: 1.5rem;
+      right: 1.5rem;
+      z-index: 10;
       flex-direction: row;
       gap: 0.5rem;
-      background: var(--light);
-      padding: 12px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 10px 12px;
       border-radius: 10px;
-      box-shadow: 0 4px 12px var(--shadow);
+      box-shadow: 0 4px 16px var(--shadow-strong);
       border: 1px solid hsla(220, 15%, 90%, 0.8);
+      max-width: calc(100vw - 3rem);
    }
 
    .statusGA,
    .statusGB {
       flex-direction: column;
       align-items: flex-start;
-      gap: 6px;
+      gap: 4px;
       flex: 1;
+      min-width: 0;
    }
 
    .details-status .status {
@@ -556,6 +576,7 @@ body {
    #status-value {
       font-size: 0.85rem;
       text-align: left;
+      word-break: break-word;
    }
 
    /* Container Details - Slide in from Right */
@@ -564,7 +585,6 @@ body {
       right: 0;
       top: 0;
       bottom: 0;
-      width: 85%;
       max-width: 400px;
       min-width: 280px;
       height: 100vh;
@@ -583,18 +603,18 @@ body {
    }
 
    .container-details > h1 {
-      font-size: 1.3rem;
+      font-size: 2.5rem;
       margin-top: 1rem;
    }
 
    .container-details > p {
-      font-size: 0.75rem;
+      font-size: 0.9rem;
       line-height: 1.4;
    }
 
    /* Hide status in details panel on mobile */
    .container-details .details-status {
-      /* display: none; */
+      display: none;
    }
 
    /* Mobile Input Adjustments */
@@ -621,7 +641,7 @@ body {
    .dropdown-btn-2 {
       display: flex;
       position: fixed;
-      bottom: 1rem;
+      bottom: 2rem;
       right: 1.5rem;
       cursor: pointer;
       z-index: 99;
@@ -634,8 +654,7 @@ body {
    }
 
    .dropdown-btn-2.show {
-      right: min(60%, 600px);
-      max-width: calc(400px - 1.5rem);
+      right: calc(400px + 1.5rem);
    }
 
    .dropdown-btn-2.show > svg {
@@ -664,7 +683,6 @@ body {
       font-size: 0.85rem;
       padding: 8px 12px;
    }
-
    .section-title {
       font-size: 0.7rem;
    }
@@ -675,20 +693,12 @@ body {
       min-width: 280px;
    }
 
-   .container-dropdown {
-      width: 80%;
-   }
-
    .container-details {
-      width: 80%;
+      width: 200px;
    }
 
    .dropdown-btn-2.show {
-      right: calc(90% - 1rem);
-   }
-
-   .sectionA span:not([class=section-title]), .sectionB span:not([class=section-title]) {
-      font-size: 0.7rem !important;
+      right: calc(300px);
    }
 
    .graph {
@@ -701,18 +711,26 @@ body {
    }
 
    #details-topic {
-      font-size: 2.5rem;
+      font-size: 1.4rem;
    }
 
    #text {
-      font-size: 0.9rem;
-      line-height: 2.9 !important;
+      font-size: 0.4rem;
+   }
+
+   .container-dropdown {
+      width: 150px;
    }
 
    .sectionA,
    .sectionB {
       width: 100%;
       border-right: none;
+   }
+
+   .sectionA span:not([class="section-title"]),
+   .sectionB span:not([class="section-title"]) {
+      font-size: 0.7rem;
    }
 
    .sectionA {
