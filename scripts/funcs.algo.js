@@ -1,4 +1,4 @@
-import { sortCompare, sortSwap, sortStatusLog } from "./func.algo.animate.js";
+import { sortCompare, sortSwap, sortStatusLog } from "./funcs.algo.animate.js";
 import { sleep } from "./funcs.utils.js";
 import { graphInfo } from "../script.js";
 
@@ -9,7 +9,7 @@ async function bubble(arr) {
    
    for (let i = 0; i < n; i++) {
       for (let j = 0; j < n - i - 1; j++) {
-         sortStatusLog(false, {status: "Comparing",value: `is ${arr[j]} bigger than ${arr[j + 1]}?`, });
+         sortStatusLog(false, {status: "Comparing", value: `Is ${arr[j]} <b>></b> ${arr[j + 1]}?` });
          sortCompare([], j, j + 1);
          await sleep(graphInfo.sortSpeed);
 
@@ -33,14 +33,14 @@ async function bubble(arr) {
 }
 
 async function selection(arr) {
-   let sorted = [];
+   let sorted = [0];
    const n = arr.length;
 
    for (let i = 0; i < n; i++) {
       const last = n - i - 1;
       let bigIdx = 0;
       for (let j = 0; j < n - i; j++) {
-         sortStatusLog(false, {status: "Comparing", value: `Is ${arr[j]} bigger than or equal to ${arr[bigIdx]}?`,});
+         sortStatusLog(false, {status: "Comparing", value: `Is ${arr[j]} <b> >=</b> ${arr[bigIdx]}?`,});
          sortCompare([], j, undefined, bigIdx);
          await sleep(graphInfo.sortSpeed);
 
@@ -62,27 +62,30 @@ async function selection(arr) {
 }
 
 async function insertion(arr) {
+   let sorted = []
    const n = arr.length;
    for (let i = 0; i < n; i++) {
       let j = i;
 
       while (j > 0 && arr[j] < arr[j - 1]) {
-         sortStatusLog(false, {status: "Comparing", value: `Is ${arr[j]} less than ${arr[j - 1]}?`, });
+         sortStatusLog(false, {status: "Comparing", value: `Is ${arr[j]} <b><</b> ${arr[j - 1]}?`, });
          sortCompare([], undefined, j - 1, j);
          await sleep(graphInfo.sortSpeed);
 
-         sortStatusLog("swap", {
-            status: "Swapping",
-            value: `Moving ${arr[j]} to left `,
-         });
+         sortStatusLog("swap", {status: "Swapping",value: `Moving ${arr[j]} to left `});
          await sortSwap(j, j - 1);
          await sleep(graphInfo.sortSpeed);
 
          [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
          j -= 1;
       }
-   }
 
+      sorted.push(i);
+      sortCompare(sorted);
+      await sleep(graphInfo.sortSpeed);
+
+   }
+   
    sortStatusLog("reset", { status: "Finished", value: "" });
 }
 
