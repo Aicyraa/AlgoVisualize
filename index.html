@@ -1,106 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>AlgoVisual</title>
-      <link rel="shortcut icon" href="svg/favicon.ico" type="image/ico">
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet"/>
-      <link rel="stylesheet" href="style.css" />
-      <script src="script.js" type="module" defer></script>
-      <style>
-         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Jetbrains Mono", sans-serif, monospace;
-         }
-
-         html,
-         body {
-            background: var(--muted-light);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-         }
-      </style>
-   </head>
-   <body>
-      <!-- Selection -->
-      <div class="container">
-         <div class="dropdown dropdown-btn-1">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-               <path d="M7 10l5 5 5-5z" />
-            </svg>
-         </div>
-         <div class="container-dropdown">
-            <div class="sectionA">
-               <span class="section-title">Algorithm</span>
-               <span class="types selected" data-type="bubble">Bubble </span>
-               <span class="types" data-type="selection">Selection </span>
-               <span class="types" data-type="insertion">Insertion </span>
-               <span class="types" data-type="merge">Merge </span>
-               <span class="types" data-type="quick">Quick </span>
-            </div>
-            <div class="sectionB">
-               <span class="section-title">Sorting Speed</span>
-               <span class="speeds" data-speed="1.50">0.5x</span>
-               <span class="speeds" data-speed="1.25">0.75x</span>
-               <span class="speeds selected" data-speed="1">1x</span>
-               <span class="speeds" data-speed="0.5">1.50x</span>
-               <span class="speeds" data-speed="0.2">2.00x</span>
-            </div>
-         </div>
-
-         <!-- Graph -->
-         <div class="container-graph">
-            <div class="graph"></div>
-         </div>
-
-         <!-- Details -->
-
-         <div class="dropdown dropdown-btn-2">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-               <path d="M7 10l5 5 5-5z" />
-            </svg>
-         </div>
-
-         <div class="container-details">
-            <h1 id="details-topic"></h1>
-            <p id="details-desc"></p>
-            <div class="details-status">
-               <div class="statusGA">
-                  <span class="status">Swap Count</span>
-                  <span id="swap-count"> </span>
-               </div>
-               <div class="statusGB">
-                  <span class="status" id="status-log">Status</span>
-                  <span id="status-value"></span>
-               </div>
-            </div>
-            <div class="details-input">
-               <div class="group input-custom selected">
-                   <span class="input-label active">Custom Points</span>
-                   <input type="text" id="custom-value" placeholder="e.g., 5, 3, 8, 1, 9, 2" />
-                   <button type="button" class="button" data-input="custom">Sort</button>
-               </div>
-               <div class="group input-random">
-                   <span class="input-label">Random Points</span>
-                   <input type="number" id="random-value" placeholder="Enter number of random graph" /> 
-                   <button type="button" class="button" data-input="random">Sort</button>
-               </div>
-               <div class="input-btn">
-                   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                       <path d="M7 10l5 5 5-5z" />
-                   </svg>
-               </div>
-           </div>
-         </div>
-      </div>
-   </body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>algovisualize-v2</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

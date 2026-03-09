@@ -1,1 +1,4 @@
 guide.txt
+node_modules/
+dist/
+*.local
