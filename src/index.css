@@ -66,7 +66,7 @@ html, body, #root {
 
 /* ─── Sidebar Toggle Button ─────────────────────────────── */
 .sidebar-toggle {
-  position: fixed;
+  position: absolute;
   top: 16px;
   left: 16px;
   z-index: 300;
@@ -80,7 +80,7 @@ html, body, #root {
   background: var(--surface);
   color: var(--text-muted);
   cursor: pointer;
-  transition: var(--transition);
+  transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
   backdrop-filter: blur(12px);
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
@@ -90,9 +90,35 @@ html, body, #root {
   background: var(--accent-glow);
 }
 
+/* ─── Panel Toggle Button ───────────────────────────────── */
+.panel-toggle {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.panel-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
 /* ─── Floating Sidebar ──────────────────────────────────── */
 .sidebar {
-  position: fixed;
+  position: absolute;
   top: 16px;
   left: 16px;
   z-index: 300;
@@ -304,6 +330,7 @@ html, body, #root {
 .sorting-visualizer {
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   gap: 8px;
   padding: 40px 48px;
   background: var(--surface);
@@ -312,6 +339,9 @@ html, body, #root {
   min-width: 500px;
   min-height: 360px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.sorting-visualizer:has(.empty-state) {
+  align-items: center;
 }
 
 /* ─── Sort Element (shared) ─────────────────────────────── */
@@ -450,7 +480,9 @@ html, body, #root {
 
 /* ─── Floating Panel ─────────────────────────────────────── */
 .floating-panel {
-  position: fixed;
+  position: absolute;
+  top: 16px;
+  right: 20px;
   min-width: 280px;
   max-width: 340px;
   background: var(--surface);
