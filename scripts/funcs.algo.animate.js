@@ -119,7 +119,7 @@ function sortStatusLog(countSwap, logMessage) {
       swapCount = 1;
       setTimeout(() => {
          count.textContent = "";
-      }, 1500);
+      }, swapCount * 5);
    }
 
    if (logMessage) {
