@@ -1,5 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import Draggable from 'react-draggable';
+import type { DraggableData, DraggableEvent } from 'react-draggable';
 import type { AlgorithmMode, SortingAlgorithm, RecursionScenario, ElementType } from '../engine/types';
 import type { EngineStatus } from '../engine/AnimationEngine';
 import { SpeedSlider } from './ui/SpeedSlider';
@@ -26,8 +27,6 @@ interface ControlBarProps {
   onInputChange: (value: string) => void;
   onGenerate: () => void;
   onRandom: () => void;
-  onTogglePanel: () => void;
-  panelVisible: boolean;
 }
 
 export function ControlBar({
@@ -52,35 +51,64 @@ export function ControlBar({
   onInputChange,
   onGenerate,
   onRandom,
-  onTogglePanel,
-  panelVisible,
 }: ControlBarProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const [dragPos, setDragPos] = useState({ x: 0, y: 0 });
   const nodeRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLDivElement>(null);
   const isRunning = status === 'playing';
+  const didDragRef = useRef(false);
+
+  const onDragStop = useCallback((_e: DraggableEvent, data: DraggableData) => {
+    setDragPos({ x: data.x, y: data.y });
+  }, []);
+
+  const onToggleDragStart = useCallback(() => {
+    didDragRef.current = false;
+  }, []);
+
+  const onToggleDrag = useCallback(() => {
+    didDragRef.current = true;
+  }, []);
+
+  const onToggleDragStop = useCallback((_e: DraggableEvent, data: DraggableData) => {
+    setDragPos({ x: data.x, y: data.y });
+    if (!didDragRef.current) {
+      setCollapsed(false);
+    }
+  }, []);
 
   if (collapsed) {
     return (
-      <button
-        className="sidebar-toggle"
-        onClick={() => setCollapsed(false)}
-        title="Open controls"
+      <Draggable
+        nodeRef={toggleRef as React.RefObject<HTMLElement>}
+        position={dragPos}
+        onStart={onToggleDragStart}
+        onDrag={onToggleDrag}
+        onStop={onToggleDragStop}
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <line x1="3" y1="12" x2="21" y2="12" />
-          <line x1="3" y1="18" x2="21" y2="18" />
-        </svg>
-      </button>
+        <div className="sidebar-toggle" ref={toggleRef}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </div>
+      </Draggable>
     );
   }
 
   return (
-    <Draggable handle=".sidebar__header" nodeRef={nodeRef as React.RefObject<HTMLElement>}>
+    <Draggable
+      handle=".sidebar__header"
+      nodeRef={nodeRef as React.RefObject<HTMLElement>}
+      position={dragPos}
+      onStop={onDragStop}
+    >
       <div className="sidebar" ref={nodeRef}>
         <div className="sidebar__header">
           <div className="sidebar__logo">
-            Algo<span>Visualize</span>
+            Inztra<span>lise</span>
           </div>
           <button className="sidebar__close" onClick={() => setCollapsed(true)} title="Collapse">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -217,17 +245,6 @@ export function ControlBar({
             <div className="progress-bar" style={{ marginTop: 8 }}>
               <div className="progress-bar__fill" style={{ width: `${progress}%` }} />
             </div>
-          </div>
-
-          {/* Info Panel Toggle */}
-          <div className="sidebar__section">
-            <button
-              className={`btn btn--sm ${panelVisible ? 'btn--active' : ''}`}
-              onClick={onTogglePanel}
-              style={{ width: '100%' }}
-            >
-              {panelVisible ? 'Hide Steps Panel' : 'Show Steps Panel'}
-            </button>
           </div>
         </div>
       </div>

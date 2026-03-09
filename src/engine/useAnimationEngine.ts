@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { engine } from './AnimationEngine';
 import type { EngineStatus } from './AnimationEngine';
 import type { Step } from './types';

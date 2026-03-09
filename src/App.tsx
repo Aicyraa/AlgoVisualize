@@ -162,7 +162,6 @@ function App() {
         progress={state.progress}
         inputValue={inputValue}
         hasSteps={engine.getTotalSteps() > 0}
-        panelVisible={panelVisible}
         onModeChange={handleModeChange}
         onSortAlgorithmChange={setSortAlgorithm}
         onRecursionScenarioChange={setRecursionScenario}
@@ -175,12 +174,11 @@ function App() {
         onInputChange={setInputValue}
         onGenerate={handleGenerate}
         onRandom={handleRandom}
-        onTogglePanel={() => setPanelVisible(v => !v)}
       />
 
       <FloatingPanel
         visible={panelVisible}
-        onClose={() => setPanelVisible(false)}
+        onToggle={() => setPanelVisible(v => !v)}
         currentStep={state.step}
         stepIndex={state.stepIndex}
         totalSteps={engine.getTotalSteps()}
