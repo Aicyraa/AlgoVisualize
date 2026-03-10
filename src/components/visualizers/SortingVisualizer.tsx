@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import type { Step, ElementType } from '../../engine/types';
+import type { Step, ElementType, SortingAlgorithm } from '../../engine/types';
 import { BarElement } from './elements/BarElement';
 import { CircleElement } from './elements/CircleElement';
 import { SquareElement } from './elements/SquareElement';
@@ -11,38 +11,103 @@ const ELEMENT_WIDTHS: Record<ElementType, number> = {
   squares: 52,
   array: 52,
 };
-const GAP = 8; // matches CSS .sorting-visualizer gap
+const GAP = 8;
 
 interface SortingVisualizerProps {
   values: number[];
   currentStep: Step | undefined;
   elementType: ElementType;
+  algorithm: SortingAlgorithm;
 }
 
-export function SortingVisualizer({ values, currentStep, elementType }: SortingVisualizerProps) {
-  const sortedIndicesRef = useRef<Set<number>>(new Set());
+/**
+ * Elements are identified by their original index. Instead of swapping values
+ * at fixed positions, we track which element sits at which position and
+ * physically move elements via CSS `left` transitions.
+ *
+ * For merge sort: elements start at the top and move downward as the recursion
+ * splits deeper. During merging they move back up.
+ */
+export function SortingVisualizer({ values, currentStep, elementType, algorithm }: SortingVisualizerProps) {
+  const sortedPositionsRef = useRef<Set<number>>(new Set());
+  // order[position] = elementId (original index)
+  const orderRef = useRef<number[]>([]);
+  const elementValuesRef = useRef<number[]>([]);
+  // Track which step we last processed to avoid double-applying swaps
+  const lastAppliedStepRef = useRef<Step | undefined>(undefined);
+  const prevValuesRef = useRef<number[]>([]);
+  // Track which elements are being swapped this step (by elementId)
+  const swappingElementIds = useRef<Set<number>>(new Set());
+  // For merge sort: track the current depth per element position
+  const mergeDepthRef = useRef<Map<number, number>>(new Map());
 
-  // Track sorted indices across steps
-  if (currentStep) {
+  const isMergeSort = algorithm === 'merge';
+
+  // Reset when no step (engine reset) or values array changed
+  const valuesChanged = prevValuesRef.current !== values && (
+    prevValuesRef.current.length !== values.length ||
+    prevValuesRef.current.some((v, i) => v !== values[i])
+  );
+  prevValuesRef.current = values;
+
+  if (!currentStep || valuesChanged) {
+    orderRef.current = values.map((_, i) => i);
+    elementValuesRef.current = [...values];
+    sortedPositionsRef.current = new Set();
+    lastAppliedStepRef.current = undefined;
+    mergeDepthRef.current = new Map();
+  }
+
+  // Ensure order is initialized
+  if (orderRef.current.length === 0 && values.length > 0) {
+    orderRef.current = values.map((_, i) => i);
+    elementValuesRef.current = [...values];
+  }
+
+  // Apply swap to order — only once per step
+  if (currentStep && currentStep !== lastAppliedStepRef.current) {
+    lastAppliedStepRef.current = currentStep;
+    swappingElementIds.current = new Set();
+
+    if (currentStep.type === 'swap') {
+      const [posA, posB] = currentStep.indices;
+      const order = orderRef.current;
+      swappingElementIds.current.add(order[posA]);
+      swappingElementIds.current.add(order[posB]);
+      [order[posA], order[posB]] = [order[posB], order[posA]];
+    }
+
+    // For merge sort: track depth per position
+    if (isMergeSort && currentStep.meta) {
+      const depth = currentStep.meta.depth as number;
+      for (const idx of currentStep.indices) {
+        mergeDepthRef.current.set(idx, depth);
+      }
+    }
+
+    // Track sorted positions
     if (currentStep.type === 'sorted') {
       for (const idx of currentStep.indices) {
-        sortedIndicesRef.current.add(idx);
+        sortedPositionsRef.current.add(idx);
+      }
+      // For merge sort: sorted elements rise back to depth 0
+      if (isMergeSort) {
+        for (const idx of currentStep.indices) {
+          mergeDepthRef.current.set(idx, 0);
+        }
       }
     } else if (currentStep.type === 'done') {
-      const snap = currentStep.snapshot ?? values;
-      sortedIndicesRef.current = new Set(snap.map((_, i) => i));
+      sortedPositionsRef.current = new Set(values.map((_, i) => i));
+      if (isMergeSort) {
+        mergeDepthRef.current = new Map();
+      }
     }
   }
 
-  // Reset sorted tracking when no step (engine was reset)
-  if (!currentStep) {
-    sortedIndicesRef.current = new Set();
-  }
+  const maxValue = Math.max(...values, 1);
+  const slotWidth = ELEMENT_WIDTHS[elementType] + GAP;
 
-  const displayValues = currentStep?.snapshot ?? values;
-  const maxValue = Math.max(...displayValues, 1);
-
-  if (displayValues.length === 0) {
+  if (values.length === 0) {
     return (
       <div className="sorting-visualizer">
         <div className="empty-state">
@@ -55,66 +120,97 @@ export function SortingVisualizer({ values, currentStep, elementType }: SortingV
     );
   }
 
-  function getState(index: number): string | undefined {
+  // Build position map: elementId -> current position
+  const order = orderRef.current;
+  const positionOf: Record<number, number> = {};
+  for (let pos = 0; pos < order.length; pos++) {
+    positionOf[order[pos]] = pos;
+  }
+
+  function getState(elementId: number): string | undefined {
     if (!currentStep) return undefined;
 
     const { type, indices } = currentStep;
+    const pos = positionOf[elementId];
 
     if (type === 'done') return 'sorted';
-    if (type === 'compare' && indices.includes(index)) return 'compare';
-    if (type === 'swap' && indices.includes(index)) return 'swap';
-    if (type === 'pivot' && indices.includes(index)) return 'pivot';
-    if (type === 'highlight' && indices.includes(index)) return 'highlight';
-    if (type === 'correct' && indices.includes(index)) return 'compare';
-    if ((type === 'merge-place' || type === 'merge-split') && indices.includes(index)) return 'swap';
-    if (type === 'sorted' && indices.includes(index)) return 'sorted';
+    if (type === 'compare' && indices.includes(pos)) return 'compare';
+    if (type === 'swap' && swappingElementIds.current.has(elementId)) return 'swap';
+    if (type === 'pivot' && indices.includes(pos)) return 'pivot';
+    if (type === 'highlight' && indices.includes(pos)) return 'highlight';
+    if (type === 'correct' && indices.includes(pos)) return 'compare';
+    if ((type === 'merge-place' || type === 'merge-split') && indices.includes(pos)) return 'swap';
+    if (type === 'sorted' && indices.includes(pos)) return 'sorted';
 
-    if (sortedIndicesRef.current.has(index)) return 'sorted';
+    if (sortedPositionsRef.current.has(pos)) return 'sorted';
 
     return undefined;
   }
 
-  function getAnimStyle(index: number): React.CSSProperties | undefined {
-    if (!currentStep) return undefined;
+  function getPositionStyle(elementId: number): React.CSSProperties {
+    const pos = positionOf[elementId];
 
-    // Swap: slide two elements to each other's positions
-    if (currentStep.type === 'swap') {
-      const [a, b] = currentStep.indices;
-      if (index !== a && index !== b) return undefined;
+    if (isMergeSort) {
+      const depth = mergeDepthRef.current.get(pos) ?? 0;
+      const maxDepth = (currentStep?.meta?.maxDepth as number) ?? Math.ceil(Math.log2(values.length));
+      // Each depth level moves elements down by a fraction of the container
+      const yOffset = depth * 40; // 40px per depth level
 
-      const slotWidth = ELEMENT_WIDTHS[elementType] + GAP;
-      const distance = (b - a) * slotWidth;
+      const style: React.CSSProperties = {
+        position: 'absolute',
+        left: `${pos * slotWidth}px`,
+        top: `${20 + yOffset}px`,
+        transition: 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1), top 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+      };
 
-      if (index === a) return { transform: `translateX(${distance}px) translateY(-10px)` };
-      if (index === b) return { transform: `translateX(${-distance}px) translateY(-10px)` };
-    }
-
-    // Merge-place: lift effect for placed element
-    if (currentStep.type === 'merge-place') {
-      if (currentStep.indices.includes(index)) {
-        return { transform: 'translateY(-10px)' };
+      if (currentStep?.type === 'swap' && swappingElementIds.current.has(elementId)) {
+        style.transform = 'translateY(-10px)';
       }
+
+      return style;
     }
 
-    return undefined;
+    // Default (non-merge) positioning
+    const style: React.CSSProperties = {
+      position: 'absolute',
+      left: `${pos * slotWidth}px`,
+      bottom: 0,
+      transition: 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+    };
+
+    if (currentStep?.type === 'swap' && swappingElementIds.current.has(elementId)) {
+      style.transform = 'translateY(-10px)';
+    }
+
+    if (currentStep?.type === 'merge-place' && currentStep.indices.includes(pos)) {
+      style.transform = 'translateY(-10px)';
+    }
+
+    return style;
   }
+
+  const totalWidth = values.length * slotWidth - GAP;
+  const mergeMaxDepth = (currentStep?.meta?.maxDepth as number) ?? Math.ceil(Math.log2(values.length));
+  const mergeMinHeight = isMergeSort ? 360 + mergeMaxDepth * 40 : undefined;
 
   return (
-    <div className="sorting-visualizer">
-      {displayValues.map((value, index) => {
-        const state = getState(index);
-        const style = getAnimStyle(index);
-        switch (elementType) {
-          case 'circles':
-            return <CircleElement key={index} value={value} state={state} style={style} />;
-          case 'squares':
-            return <SquareElement key={index} value={value} state={state} style={style} />;
-          case 'array':
-            return <ArrayElement key={index} value={value} state={state} style={style} />;
-          default:
-            return <BarElement key={index} value={value} maxValue={maxValue} state={state} style={style} />;
-        }
-      })}
+    <div className="sorting-visualizer" style={isMergeSort ? { alignItems: 'flex-start', minHeight: mergeMinHeight ? `${mergeMinHeight}px` : undefined } : undefined}>
+      <div className="sorting-visualizer__inner" style={{ position: 'relative', minWidth: `${totalWidth}px` }}>
+        {elementValuesRef.current.map((value, elementId) => {
+          const state = getState(elementId);
+          const style = getPositionStyle(elementId);
+          switch (elementType) {
+            case 'circles':
+              return <CircleElement key={elementId} value={value} state={state} style={style} />;
+            case 'squares':
+              return <SquareElement key={elementId} value={value} state={state} style={style} />;
+            case 'array':
+              return <ArrayElement key={elementId} value={value} state={state} style={style} />;
+            default:
+              return <BarElement key={elementId} value={value} maxValue={maxValue} state={state} style={style} />;
+          }
+        })}
+      </div>
     </div>
   );
 }

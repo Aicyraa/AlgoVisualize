@@ -143,6 +143,7 @@ function App() {
             values={values}
             currentStep={state.step}
             elementType={elementType}
+            algorithm={sortAlgorithm}
           />
         ) : (
           <RecursionVisualizer
