@@ -1,6 +1,6 @@
 # AlgoVisualize — Rebuild Design Document
 > Generated via `brainstorming` skill · 2026-03-09
-
+>   ➜  Local:   http://localhost:5173/
 ---
 
 ## 1. Current State Analysis
