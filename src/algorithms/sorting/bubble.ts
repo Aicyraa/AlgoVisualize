@@ -23,12 +23,6 @@ export function bubbleSort(arr: number[]): Step[] {
           snapshot: [...a],
         });
         [a[j], a[j + 1]] = [a[j + 1], a[j]];
-        steps.push({
-          type: 'swap',
-          indices: [j, j + 1],
-          description: `After swap: ${a[j]} ↔ ${a[j + 1]}`,
-          snapshot: [...a],
-        });
       }
     }
     sorted.push(n - i - 1);

@@ -34,16 +34,10 @@ export function selectionSort(arr: number[]): Step[] {
       steps.push({
         type: 'swap',
         indices: [maxIdx, last],
-        description: `Placing max value ${a[maxIdx]} at position ${last}`,
+        description: `Swapping ${a[maxIdx]} and ${a[last]}`,
         snapshot: [...a],
       });
       [a[maxIdx], a[last]] = [a[last], a[maxIdx]];
-      steps.push({
-        type: 'swap',
-        indices: [maxIdx, last],
-        description: `Swapped ${a[last]} into sorted position`,
-        snapshot: [...a],
-      });
     }
 
     sorted.push(last);

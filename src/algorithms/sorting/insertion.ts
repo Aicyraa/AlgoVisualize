@@ -26,17 +26,11 @@ export function insertionSort(arr: number[]): Step[] {
       });
       steps.push({
         type: 'swap',
-        indices: [j, j - 1],
-        description: `Moving ${a[j]} left past ${a[j - 1]}`,
+        indices: [j - 1, j],
+        description: `Swapping ${a[j]} and ${a[j - 1]}`,
         snapshot: [...a],
       });
       [a[j], a[j - 1]] = [a[j - 1], a[j]];
-      steps.push({
-        type: 'swap',
-        indices: [j - 1, j],
-        description: `${a[j - 1]} moved into position ${j - 1}`,
-        snapshot: [...a],
-      });
       j--;
     }
 

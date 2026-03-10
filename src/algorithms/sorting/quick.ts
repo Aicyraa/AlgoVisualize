@@ -34,13 +34,6 @@ export function quickSort(arr: number[]): Step[] {
             meta: { pivot, pivotIdx: high },
           });
           [arr[i], arr[j]] = [arr[j], arr[i]];
-          steps.push({
-            type: 'swap',
-            indices: [i, j],
-            description: `After swap — ${arr[i]} at ${i}, ${arr[j]} at ${j}`,
-            snapshot: [...arr],
-            meta: { pivot, pivotIdx: high },
-          });
         }
       }
     }
