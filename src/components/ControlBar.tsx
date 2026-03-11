@@ -242,9 +242,6 @@ export function ControlBar({
             <div style={{ marginTop: 8 }}>
               <SpeedSlider speed={speed} onSpeedChange={onSpeedChange} />
             </div>
-            <div className="progress-bar" style={{ marginTop: 8 }}>
-              <div className="progress-bar__fill" style={{ width: `${progress}%` }} />
-            </div>
           </div>
         </div>
       </div>
