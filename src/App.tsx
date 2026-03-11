@@ -15,6 +15,7 @@ import { CanvasWorkspace } from './components/CanvasWorkspace';
 import { FloatingPanel } from './components/FloatingPanel';
 import { SortingVisualizer } from './components/visualizers/SortingVisualizer';
 import { RecursionVisualizer } from './components/visualizers/RecursionVisualizer';
+import { ProgressBar } from './components/ProgressBar';
 
 import { bubbleSort } from './algorithms/sorting/bubble';
 import { selectionSort } from './algorithms/sorting/selection';
@@ -138,19 +139,28 @@ function App() {
   return (
     <div className="app">
       <CanvasWorkspace>
-        {mode === 'sorting' ? (
-          <SortingVisualizer
-            values={values}
-            currentStep={state.step}
-            elementType={elementType}
-            algorithm={sortAlgorithm}
+        <div className="visualizer-wrapper">
+          <ProgressBar
+            progress={state.progress}
+            stepIndex={state.stepIndex}
+            totalSteps={engine.getTotalSteps()}
+            status={state.status}
+            stepType={state.step?.type}
           />
-        ) : (
-          <RecursionVisualizer
-            nodes={recursionNodes}
-            currentStep={state.step}
-          />
-        )}
+          {mode === 'sorting' ? (
+            <SortingVisualizer
+              values={values}
+              currentStep={state.step}
+              elementType={elementType}
+              algorithm={sortAlgorithm}
+            />
+          ) : (
+            <RecursionVisualizer
+              nodes={recursionNodes}
+              currentStep={state.step}
+            />
+          )}
+        </div>
       </CanvasWorkspace>
 
       <ControlBar
