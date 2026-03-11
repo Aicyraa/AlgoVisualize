@@ -115,8 +115,8 @@ export function FloatingPanel({
                 key={entry.index}
                 className={`panel-step-entry ${i === recentSteps.length - 1 ? 'active' : ''}`}
               >
-                <span className={`tag ${entry.type}`}>{entry.type}</span>{' '}
-                {entry.description}
+                <span className={`tag ${entry.type}`}>{entry.type}</span>
+                <span className="panel-step-entry__desc">{entry.description}</span>
               </div>
             ))}
           </div>
