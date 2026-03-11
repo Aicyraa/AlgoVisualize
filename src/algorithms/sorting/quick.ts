@@ -38,6 +38,15 @@ export function quickSort(arr: number[]): Step[] {
       }
     }
 
+    if (i + 1 !== high) {
+      steps.push({
+        type: 'swap',
+        indices: [i + 1, high],
+        description: `Moving pivot ${pivot} to position ${i + 1}`,
+        snapshot: [...arr],
+        meta: { pivot, pivotIdx: high },
+      });
+    }
     [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
     steps.push({
       type: 'sorted',
