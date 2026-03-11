@@ -43,7 +43,7 @@ export function ProgressBar({ progress, stepIndex, totalSteps, status, stepType 
           <span className={`progress-header__status progress-header__status--${status}`}>
             {statusLabel}
           </span>
-          {stepLabel && status === 'playing' && (
+          {stepLabel && (status === 'playing' || status === 'paused') && (
             <span className="progress-header__step-type">{stepLabel}</span>
           )}
         </div>

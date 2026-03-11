@@ -57,7 +57,7 @@ export class AnimationEngine {
     if (this.currentIndex >= this.steps.length) return;
     const step = this.steps[this.currentIndex];
     this.currentIndex++;
-    if (this.currentIndex >= this.steps.length) this.status = 'done';
+    this.status = this.currentIndex >= this.steps.length ? 'done' : 'paused';
     this.notifyStep(this.currentIndex - 1, step);
   }
 
