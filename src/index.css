@@ -520,15 +520,16 @@ html, body, #root {
   border-radius: 4px;
 }
 .floating-panel__close:hover { color: var(--swap); background: var(--swap-glow); }
-.floating-panel__body { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.floating-panel__body { padding: 14px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
 
 .panel-stat {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
-.panel-stat__label { font-size: 11px; color: var(--text-muted); }
-.panel-stat__value { font-size: 13px; font-weight: 600; color: var(--accent); }
+.panel-stat__label { font-size: 10px; color: var(--text-muted); }
+.panel-stat__value { font-size: 11px; font-weight: 600; color: var(--accent); }
 .panel-stat__value.done { color: var(--sorted); }
 
 .panel-step-log {
@@ -536,15 +537,16 @@ html, body, #root {
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
+  width: 100%;
 }
 .panel-step-entry {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
-  font-size: 11.5px;
+  font-size: 11px;
   color: var(--text-muted);
-  padding: 5px 10px;
+  padding: 6px 10px;
   border-radius: var(--radius-sm);
   background: var(--surface-2);
   border-left: 2px solid var(--border);
@@ -553,7 +555,9 @@ html, body, #root {
 }
 .panel-step-entry .tag {
   flex-shrink: 0;
-  margin-top: 1px;
+  font-size: 7.5px;
+  min-width: 44px;
+  padding: 1px 5px;
 }
 .panel-step-entry.active {
   color: var(--text);
@@ -764,6 +768,8 @@ html, body, #root {
   padding: 8px;
   background: var(--surface-2);
   border-radius: var(--radius-sm);
+  width: 100%;
+  text-align: center;
 }
 .algo-info strong { color: var(--accent); }
 
