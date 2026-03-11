@@ -1,6 +1,5 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef } from 'react';
 import Draggable from 'react-draggable';
-import type { DraggableData, DraggableEvent } from 'react-draggable';
 import type { AlgorithmMode, SortingAlgorithm, RecursionScenario, ElementType } from '../engine/types';
 import type { EngineStatus } from '../engine/AnimationEngine';
 import { SpeedSlider } from './ui/SpeedSlider';
@@ -53,39 +52,18 @@ export function ControlBar({
   onRandom,
 }: ControlBarProps) {
   const [collapsed, setCollapsed] = useState(false);
-  const [dragPos, setDragPos] = useState({ x: 0, y: 0 });
   const nodeRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLDivElement>(null);
   const isRunning = status === 'playing';
   const didDragRef = useRef(false);
 
-  const onDragStop = useCallback((_e: DraggableEvent, data: DraggableData) => {
-    setDragPos({ x: data.x, y: data.y });
-  }, []);
-
-  const onToggleDragStart = useCallback(() => {
-    didDragRef.current = false;
-  }, []);
-
-  const onToggleDrag = useCallback(() => {
-    didDragRef.current = true;
-  }, []);
-
-  const onToggleDragStop = useCallback((_e: DraggableEvent, data: DraggableData) => {
-    setDragPos({ x: data.x, y: data.y });
-    if (!didDragRef.current) {
-      setCollapsed(false);
-    }
-  }, []);
-
   if (collapsed) {
     return (
       <Draggable
         nodeRef={toggleRef as React.RefObject<HTMLElement>}
-        position={dragPos}
-        onStart={onToggleDragStart}
-        onDrag={onToggleDrag}
-        onStop={onToggleDragStop}
+        onStart={() => { didDragRef.current = false; }}
+        onDrag={() => { didDragRef.current = true; }}
+        onStop={() => { if (!didDragRef.current) setCollapsed(false); }}
       >
         <div className="sidebar-toggle" ref={toggleRef}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -102,8 +80,6 @@ export function ControlBar({
     <Draggable
       handle=".sidebar__header"
       nodeRef={nodeRef as React.RefObject<HTMLElement>}
-      position={dragPos}
-      onStop={onDragStop}
     >
       <div className="sidebar" ref={nodeRef}>
         <div className="sidebar__header">
