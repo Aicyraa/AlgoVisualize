@@ -1,7 +1,6 @@
 import type { Step } from '../../engine/types';
 
-export function mergeSort(arr: number[]): Step[] {
-  const steps: Step[] = [];
+export function mergeSort(arr: number[]): Step[] {  const steps: Step[] = [];
   const a = [...arr];
   const maxDepth = Math.ceil(Math.log2(a.length));
 
