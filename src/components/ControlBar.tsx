@@ -35,7 +35,6 @@ export function ControlBar({
   elementType,
   speed,
   status,
-  progress,
   inputValue,
   hasSteps,
   onModeChange,

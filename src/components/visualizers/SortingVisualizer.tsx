@@ -152,9 +152,8 @@ export function SortingVisualizer({ values, currentStep, elementType, algorithm 
 
     if (isMergeSort) {
       const depth = mergeDepthRef.current.get(pos) ?? 0;
-      const maxDepth = (currentStep?.meta?.maxDepth as number) ?? Math.ceil(Math.log2(values.length));
-      // Each depth level moves elements down by a fraction of the container
-      const yOffset = depth * 40; // 40px per depth level
+      // Each depth level moves elements down by 40px
+      const yOffset = depth * 40;
 
       const style: React.CSSProperties = {
         position: 'absolute',
