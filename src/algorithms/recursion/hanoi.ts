@@ -8,13 +8,16 @@ export function hanoi(n: number): { steps: Step[]; nodes: RecursionNode[] } {
 
   function move(n: number, from: string, to: string, aux: string, parentId?: string, depth = 0): void {
     const nodeId = `hanoi-${nodeCounter++}`;
+    const isBase = n === 1;
     const node: RecursionNode = {
       id: nodeId,
-      label: `hanoi(${n}, ${from}→${to})`,
+      label: `hanoi(${n}, ${from}\u2192${to})`,
       depth,
       parentId,
       status: 'active',
       children: [],
+      baseCase: 'n = 1 \u2192 move disk',
+      recursiveCase: isBase ? '\u2014' : `hanoi(${n - 1}) + move + hanoi(${n - 1})`,
     };
     nodes.push(node);
     if (parentId) {
@@ -28,26 +31,28 @@ export function hanoi(n: number): { steps: Step[]; nodes: RecursionNode[] } {
       description: `hanoi(${n}, from ${from}, to ${to}, via ${aux})`,
       depth,
       nodeId,
+      meta: { parentId },
     });
 
-    if (n === 1) {
+    if (isBase) {
       moveCount++;
       steps.push({
         type: 'move',
         indices: [],
-        description: `Move disk 1 from ${from} → ${to} (Move #${moveCount})`,
+        description: `Move disk 1 from ${from} \u2192 ${to} (Move #${moveCount})`,
         depth,
         nodeId,
         meta: { from, to, disk: 1, moveNumber: moveCount },
       });
-      node.returnValue = `Move disk 1: ${from}→${to}`;
+      node.returnValue = `Move disk 1: ${from}\u2192${to}`;
       node.status = 'returned';
       steps.push({
         type: 'return',
         indices: [],
-        description: `Done: disk 1 from ${from} → ${to}`,
+        description: `Done: disk 1 from ${from} \u2192 ${to}`,
         depth,
         nodeId,
+        meta: { parentId, isBase: true },
       });
       return;
     }
@@ -65,7 +70,7 @@ export function hanoi(n: number): { steps: Step[]; nodes: RecursionNode[] } {
     steps.push({
       type: 'move',
       indices: [],
-      description: `Move disk ${n} from ${from} → ${to} (Move #${moveCount})`,
+      description: `Move disk ${n} from ${from} \u2192 ${to} (Move #${moveCount})`,
       depth,
       nodeId,
       meta: { from, to, disk: n, moveNumber: moveCount },
@@ -84,13 +89,14 @@ export function hanoi(n: number): { steps: Step[]; nodes: RecursionNode[] } {
     steps.push({
       type: 'return',
       indices: [],
-      description: `hanoi(${n}, ${from}→${to}) complete`,
+      description: `hanoi(${n}, ${from}\u2192${to}) complete`,
       depth,
       nodeId,
+      meta: { parentId, isBase: false },
     });
   }
 
   move(n, 'A', 'C', 'B');
-  steps.push({ type: 'done', indices: [], description: `Tower of Hanoi with ${n} disks solved in ${moveCount} moves! 🎉` });
+  steps.push({ type: 'done', indices: [], description: `Tower of Hanoi with ${n} disks solved in ${moveCount} moves! \ud83c\udf89` });
   return { steps, nodes };
 }

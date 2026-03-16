@@ -7,6 +7,7 @@ export function factorial(n: number): { steps: Step[]; nodes: RecursionNode[] } 
 
   function fact(n: number, parentId?: string, depth = 0): number {
     const nodeId = `fact-${nodeCounter++}`;
+    const isBase = n <= 1;
     const node: RecursionNode = {
       id: nodeId,
       label: `fact(${n})`,
@@ -14,6 +15,8 @@ export function factorial(n: number): { steps: Step[]; nodes: RecursionNode[] } 
       parentId,
       status: 'active',
       children: [],
+      baseCase: 'n \u2264 1 \u2192 return 1',
+      recursiveCase: isBase ? '\u2014' : `${n} \u00d7 fact(${n - 1})`,
     };
     nodes.push(node);
     if (parentId) {
@@ -27,24 +30,25 @@ export function factorial(n: number): { steps: Step[]; nodes: RecursionNode[] } 
       description: `Calling factorial(${n})`,
       depth,
       nodeId,
+      meta: { parentId },
     });
 
     let result: number;
-    if (n <= 1) {
+    if (isBase) {
       result = 1;
       steps.push({
         type: 'return',
         indices: [],
-        description: `factorial(${n}) = 1 — base case`,
+        description: `factorial(${n}) = 1 \u2014 base case`,
         depth,
         nodeId,
-        meta: { returnValue: result },
+        meta: { returnValue: result, parentId, isBase: true },
       });
     } else {
       steps.push({
         type: 'compare',
         indices: [],
-        description: `factorial(${n}) = ${n} × factorial(${n - 1})`,
+        description: `factorial(${n}) = ${n} \u00d7 factorial(${n - 1})`,
         depth,
         nodeId,
       });
@@ -53,10 +57,10 @@ export function factorial(n: number): { steps: Step[]; nodes: RecursionNode[] } 
       steps.push({
         type: 'return',
         indices: [],
-        description: `factorial(${n}) = ${n} × ${sub} = ${result}`,
+        description: `factorial(${n}) = ${n} \u00d7 ${sub} = ${result}`,
         depth,
         nodeId,
-        meta: { returnValue: result },
+        meta: { returnValue: result, parentId, isBase: false },
       });
     }
 
@@ -66,6 +70,6 @@ export function factorial(n: number): { steps: Step[]; nodes: RecursionNode[] } 
   }
 
   fact(n);
-  steps.push({ type: 'done', indices: [], description: `factorial(${n}) computed! 🎉` });
+  steps.push({ type: 'done', indices: [], description: `factorial(${n}) computed! \ud83c\udf89` });
   return { steps, nodes };
 }

@@ -7,6 +7,7 @@ export function fibonacci(n: number): { steps: Step[]; nodes: RecursionNode[] } 
 
   function fib(n: number, parentId?: string, depth = 0): number {
     const nodeId = `fib-${nodeCounter++}`;
+    const isBase = n <= 1;
     const node: RecursionNode = {
       id: nodeId,
       label: `fib(${n})`,
@@ -14,6 +15,8 @@ export function fibonacci(n: number): { steps: Step[]; nodes: RecursionNode[] } 
       parentId,
       status: 'active',
       children: [],
+      baseCase: 'n \u2264 1 \u2192 return n',
+      recursiveCase: isBase ? '\u2014' : `fib(${n - 1}) + fib(${n - 2})`,
     };
     nodes.push(node);
     if (parentId) {
@@ -27,24 +30,25 @@ export function fibonacci(n: number): { steps: Step[]; nodes: RecursionNode[] } 
       description: `Calling fib(${n})`,
       depth,
       nodeId,
+      meta: { parentId },
     });
 
     let result: number;
-    if (n <= 1) {
+    if (isBase) {
       result = n;
       steps.push({
         type: 'return',
         indices: [],
-        description: `fib(${n}) = ${result} — base case`,
+        description: `fib(${n}) = ${result} \u2014 base case`,
         depth,
         nodeId,
-        meta: { returnValue: result },
+        meta: { returnValue: result, parentId, isBase: true },
       });
     } else {
       steps.push({
         type: 'compare',
         indices: [],
-        description: `fib(${n}) = fib(${n - 1}) + fib(${n - 2}) — splitting`,
+        description: `fib(${n}) = fib(${n - 1}) + fib(${n - 2}) \u2014 splitting`,
         depth,
         nodeId,
       });
@@ -57,7 +61,7 @@ export function fibonacci(n: number): { steps: Step[]; nodes: RecursionNode[] } 
         description: `fib(${n}) = ${left} + ${right} = ${result}`,
         depth,
         nodeId,
-        meta: { returnValue: result },
+        meta: { returnValue: result, parentId, isBase: false },
       });
     }
 
@@ -67,6 +71,6 @@ export function fibonacci(n: number): { steps: Step[]; nodes: RecursionNode[] } 
   }
 
   fib(n);
-  steps.push({ type: 'done', indices: [], description: `fib(${n}) computed! 🎉` });
+  steps.push({ type: 'done', indices: [], description: `fib(${n}) computed! \ud83c\udf89` });
   return { steps, nodes };
 }
