@@ -41,4 +41,6 @@ export interface RecursionNode {
   status: 'pending' | 'active' | 'returned';
   returnValue?: number | string;
   children: string[];
+  baseCase: string;
+  recursiveCase: string;
 }
