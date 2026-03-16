@@ -566,58 +566,220 @@ html, body, #root {
 
 /* ─── Recursion Tree ─────────────────────────────────────── */
 .recursion-visualizer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  padding: 48px;
+  display: block;
+  padding: 24px;
   background: var(--surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   min-width: 500px;
   min-height: 360px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  overflow: auto;
 }
 .recursion-level {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 .recursion-node {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
 }
 .recursion-node__box {
-  padding: 8px 12px;
   border-radius: var(--radius);
   border: 1px solid var(--border);
   background: var(--surface-2);
   font-size: 11px;
   color: var(--text-muted);
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  min-width: 70px;
-  text-align: center;
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  width: 148px;
+  overflow: hidden;
 }
+
+/* Header: label + value */
+.recursion-node__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.recursion-node__label {
+  color: inherit;
+}
+.recursion-node__value {
+  color: var(--accent);
+  font-size: 10px;
+}
+
+/* Sections container */
+.recursion-node__sections {
+  border-top: 1px solid var(--border);
+  transition: border-color 0.3s ease;
+}
+.recursion-node__section {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  font-size: 9px;
+  color: var(--text-muted);
+  transition: background 0.3s ease, color 0.3s ease;
+  white-space: nowrap;
+}
+.recursion-node__section + .recursion-node__section {
+  border-top: 1px solid var(--border);
+}
+.recursion-node__section-tag {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 8px;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+  min-width: 22px;
+}
+
+/* Section highlight */
+.recursion-node__section--active {
+  background: var(--accent-glow);
+  color: var(--accent);
+}
+
+/* Status: active (blue glow) */
 .recursion-node.status-active .recursion-node__box {
   border-color: var(--accent);
   color: var(--accent);
   background: var(--accent-glow);
   box-shadow: 0 0 12px var(--accent-glow);
 }
+.recursion-node.status-active .recursion-node__sections {
+  border-color: rgba(96, 165, 250, 0.2);
+}
+
+/* Status: returned (green) */
 .recursion-node.status-returned .recursion-node__box {
   border-color: var(--sorted);
   color: var(--sorted);
   background: var(--sorted-glow);
 }
-.recursion-node__return {
-  font-size: 10px;
+.recursion-node.status-returned .recursion-node__value {
   color: var(--sorted);
-  font-weight: 600;
+}
+.recursion-node.status-returned .recursion-node__sections {
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+/* Status: returning (highlight chain pulse) */
+.recursion-node.status-returning .recursion-node__box {
+  animation: pulse-return 0.5s ease;
+  border-color: var(--sorted);
+  color: var(--sorted);
+  background: var(--sorted-glow);
+  box-shadow: 0 0 16px var(--sorted-glow);
+}
+.recursion-node.status-returning .recursion-node__value {
+  color: var(--sorted);
+}
+
+@keyframes pulse-return {
+  0%   { transform: scale(1); box-shadow: 0 0 0 rgba(16, 185, 129, 0); }
+  50%  { transform: scale(1.06); box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+  100% { transform: scale(1); box-shadow: 0 0 16px var(--sorted-glow); }
+}
+
+/* Connection lines SVG overlay */
+.recursion-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+.recursion-level {
+  z-index: 1;
+}
+
+/* Line styles */
+.recursion-line {
+  stroke: var(--border);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transition: stroke 0.3s ease, stroke-width 0.3s ease, stroke-opacity 0.3s ease;
+  stroke-opacity: 0.6;
+  fill: none;
+}
+.recursion-line--drawing {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-opacity: 1;
+  filter: drop-shadow(0 0 4px var(--accent));
+  animation: drawLine 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes drawLine {
+  from { stroke-dashoffset: var(--line-len, 9999); }
+  to   { stroke-dashoffset: 0; }
+}
+.recursion-line--calling {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-opacity: 1;
+  filter: drop-shadow(0 0 3px var(--accent));
+}
+.recursion-line--returned {
+  stroke: var(--sorted);
+  stroke-opacity: 0.45;
+}
+.recursion-line--active {
+  stroke: var(--sorted);
+  stroke-width: 3;
+  stroke-opacity: 1;
+  filter: drop-shadow(0 0 4px var(--sorted));
+}
+
+/* Connection dots at line endpoints */
+.recursion-dot {
+  fill: var(--border);
+  transition: fill 0.3s ease;
+}
+.recursion-dot--active {
+  fill: var(--accent);
+}
+.recursion-dot--returned {
+  fill: var(--sorted);
+}
+
+/* Animated return value bubble (JS-driven position via transform) */
+.return-bubble__glow {
+  fill: rgba(16, 185, 129, 0.12);
+  filter: blur(6px);
+}
+.return-bubble__bg {
+  fill: rgba(16, 185, 129, 0.18);
+  stroke: rgba(16, 185, 129, 0.4);
+  stroke-width: 1;
+}
+.return-bubble__circle {
+  fill: var(--sorted);
+  filter: drop-shadow(0 0 8px var(--sorted)) drop-shadow(0 0 14px rgba(16, 185, 129, 0.5));
+}
+.return-bubble__text {
+  fill: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  text-anchor: middle;
+  dominant-baseline: central;
+  letter-spacing: -0.03em;
+}
+.return-bubble__trail {
+  fill: var(--sorted);
 }
 
 /* ─── Empty State ────────────────────────────────────────── */
