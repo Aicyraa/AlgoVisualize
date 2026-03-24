@@ -96,7 +96,6 @@ function edgeKey(parentId: string, childId: string) {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 const NODE_W = 148; // px, must match CSS .recursion-node__box width
-const NODE_H = 52;  // px — actual card height: header(~28) + divider(1) + section(~20) + borders(2) ≈ 51px
 const H_GAP  = 12;  // horizontal gap between node cards
 const V_GAP  = 60;  // vertical gap between depth levels
 
@@ -122,6 +121,10 @@ export function RecursionVisualizer({ nodes, currentStep }: RecursionVisualizerP
   const [layout, setLayout]     = useState<Map<string, LayoutNode>>(new Map());
   const [canvasSize, setCanvasSize] = useState({ w: 0, h: 0 });
   const [lines, setLines]       = useState<LineData[]>([]);
+
+  // Measured card height — updated by ResizeObserver on the first rendered card
+  const [nodeH, setNodeH] = useState(52);
+  const firstCardRef = useRef<HTMLDivElement>(null);
 
   const containerRef  = useRef<HTMLDivElement>(null);
 
@@ -200,7 +203,22 @@ export function RecursionVisualizer({ nodes, currentStep }: RecursionVisualizerP
     if (bubble) setBubble(null);
   }
 
-  // ─── Compute layout whenever nodes change ──────────────────────────────────
+  // ─── Measure actual card height with ResizeObserver ───────────────────────
+  useEffect(() => {
+    const el = firstCardRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(entries => {
+      const h = entries[0]?.contentRect.height;
+      if (h && h > 0) setNodeH(Math.round(h));
+    });
+    ro.observe(el);
+    // Measure immediately (in case ResizeObserver fires after first render)
+    const h = el.getBoundingClientRect().height;
+    if (h > 0) setNodeH(Math.round(h));
+    return () => ro.disconnect();
+  }, [nodes]); // re-attach when nodes change (first card may have different sections)
+
+  // ─── Compute layout whenever nodes or measured height change ────────────────
   useEffect(() => {
     if (nodes.length === 0) { setLayout(new Map()); setCanvasSize({ w: 0, h: 0 }); return; }
 
@@ -215,19 +233,18 @@ export function RecursionVisualizer({ nodes, currentStep }: RecursionVisualizerP
     }
 
     // Convert grid units → px:
-    // x * (NODE_W + H_GAP) is the pixel center, but we need some padding on left
     const canvasW = Math.ceil(maxX + 0.5) * (NODE_W + H_GAP);
-    const canvasH = (maxY + 1) * (NODE_H + V_GAP);
+    const canvasH = (maxY + 1) * (nodeH + V_GAP);
 
     setLayout(computed);
     setCanvasSize({ w: canvasW, h: canvasH });
-  }, [nodes]);
+  }, [nodes, nodeH]);
 
-  // ─── Compute SVG lines from layout (no DOM measurement needed) ─────────────
+  // ─── Compute SVG lines from layout ─────────────────────────────────────────
   useEffect(() => {
     if (layout.size === 0) { setLines([]); return; }
     const SLOT_W = NODE_W + H_GAP;
-    const SLOT_H = NODE_H + V_GAP;
+    const SLOT_H = nodeH + V_GAP;
 
     const newLines: LineData[] = [];
 
@@ -240,9 +257,9 @@ export function RecursionVisualizer({ nodes, currentStep }: RecursionVisualizerP
       const cLayout = layout.get(node.id);
       if (!pLayout || !cLayout) continue;
 
-      // Center-bottom of parent card → center-top of child card
+      // Center-bottom of parent card → center-top of child card (exact pixel alignment)
       const x1 = pLayout.x * SLOT_W;
-      const y1 = pLayout.y * SLOT_H + NODE_H;
+      const y1 = pLayout.y * SLOT_H + nodeH;
       const x2 = cLayout.x * SLOT_W;
       const y2 = cLayout.y * SLOT_H;
       const dx = x2 - x1;
@@ -325,7 +342,7 @@ export function RecursionVisualizer({ nodes, currentStep }: RecursionVisualizerP
   const stepIsBase   = currentStep?.meta?.isBase === true;
 
   const SLOT_W = NODE_W + H_GAP;
-  const SLOT_H = NODE_H + V_GAP;
+  const SLOT_H = nodeH + V_GAP;
 
   // Cubic bezier path: control points make a smooth S-curve
   // from center-bottom of parent to center-top of child
@@ -382,10 +399,10 @@ export function RecursionVisualizer({ nodes, currentStep }: RecursionVisualizerP
                     '--line-len': line.length,
                   } as React.CSSProperties & { '--line-len': number }) : undefined}
                 />
-                {/* Dot at parent bottom */}
+                {/* Dot at parent bottom — r=3 overlaps the card border cleanly */}
                 <circle cx={line.x1} cy={line.y1} r="3"
                   className={`recursion-dot ${childReturned ? 'recursion-dot--returned' : ''} ${childActive ? 'recursion-dot--active' : ''}`} />
-                {/* Dot at child top */}
+                {/* Dot at child top — r=3 overlaps the card border cleanly */}
                 <circle cx={line.x2} cy={line.y2} r="3"
                   className={`recursion-dot ${childReturned ? 'recursion-dot--returned' : ''} ${childActive ? 'recursion-dot--active' : ''}`} />
               </g>
