@@ -15,7 +15,8 @@ export function fibonacci(n: number): { steps: Step[]; nodes: RecursionNode[] } 
       parentId,
       status: 'active',
       children: [],
-      baseCase: 'n \u2264 1 \u2192 return n',
+      // Plain-language: base reads "fib(1)=1", recursive reads "fib(2)+fib(1)"
+      baseCase: `fib(${n}) = ${n}`,
       recursiveCase: isBase ? '\u2014' : `fib(${n - 1}) + fib(${n - 2})`,
     };
     nodes.push(node);

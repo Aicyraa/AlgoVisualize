@@ -15,8 +15,9 @@ export function factorial(n: number): { steps: Step[]; nodes: RecursionNode[] } 
       parentId,
       status: 'active',
       children: [],
-      baseCase: 'n \u2264 1 \u2192 return 1',
-      recursiveCase: isBase ? '\u2014' : `${n} \u00d7 fact(${n - 1})`,
+      // Plain-language: base shows "1! = 1", recursive shows "3 × 2!"
+      baseCase: `${n}! = 1`,
+      recursiveCase: isBase ? '\u2014' : `${n} \u00d7 ${n - 1}!`,
     };
     nodes.push(node);
     if (parentId) {

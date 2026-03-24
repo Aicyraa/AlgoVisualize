@@ -16,8 +16,9 @@ export function hanoi(n: number): { steps: Step[]; nodes: RecursionNode[] } {
       parentId,
       status: 'active',
       children: [],
-      baseCase: 'n = 1 \u2192 move disk',
-      recursiveCase: isBase ? '\u2014' : `hanoi(${n - 1}) + move + hanoi(${n - 1})`,
+      // Plain-language: base reads "Move disk 1: A→C", rec reads "Move top 2 disks, then disk 3"
+      baseCase: `Move disk 1: ${from}\u2192${to}`,
+      recursiveCase: isBase ? '\u2014' : `Move top ${n - 1} disks, then disk ${n}`,
     };
     nodes.push(node);
     if (parentId) {
