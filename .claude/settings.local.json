@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc:*)",
+      "Bash(npx vite:*)",
+      "Bash(curl:*)",
+      "Bash(grep \"\"types\\\\|\"\"typings:*)",
+      "Bash(npx:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git:*)",
+      "Bash(npm run:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(find /home/jee/Desktop/projects/AlgoVisualize/src/engine -type f -name \"*.ts\" 2>/dev/null | head -20)",
+      "Bash(bash skills/git-pushing/scripts/smart_commit.sh \"feat: refactor merge sort to use swap-based animation with recursive depth visualization\")",
+      "Bash(bash /home/jee/.claude/skills/git-pushing/scripts/smart_commit.sh \"feat: refactor merge sort to use swap-based animation with recursive depth visualization\")"
+    ]
+  }
+}
